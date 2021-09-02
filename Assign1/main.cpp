@@ -21,8 +21,24 @@ int main(int argc, char* argv[]) {
 
         // TODO: Add your code for Test 1
         cout << "Performing Test 1" << endl;
+        cout << "----------------------------------" << endl;
         cout << "15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
-        cout << "Display Processes in ReadyQueue:" << endl;
+
+        //ADD PCB TO QUEUE USING ADD FUNCTION?
+
+        queue.display();
+
+        cout << "Remove the process with the highest priority from q1 and diplay q1." << endl;
+        queue.removeHighest();
+        queue.display();
+
+        cout << "Add processes 47, 1, 37, and 5 into q1 and display q1." << endl;
+        // ADD PCB TO QUEUE AND DISPLAY BY CALLING ADD FUNCTION
+        
+        queue.display();
+
+
+
 
 
         // TODO: Add your code for Test 2
