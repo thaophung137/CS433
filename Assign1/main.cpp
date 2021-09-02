@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
         cout << "=================================" << endl;
 
         // TODO: Add your code for Test 1
-        cout << "Performing Test 1" << std::endl;
+        cout << "Performing Test 1" << endl;
 
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;
