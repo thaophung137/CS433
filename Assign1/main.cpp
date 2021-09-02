@@ -8,6 +8,9 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+
+  ReadyQueue queue;
+  PCB pcb;
         //Print basic information about the program
         cout << "CS 433 Programming assignment 1" << endl;
         cout << "Author: Thao Phung and Sophia Nguyen" << endl;
@@ -18,6 +21,9 @@ int main(int argc, char* argv[]) {
 
         // TODO: Add your code for Test 1
         cout << "Performing Test 1" << endl;
+        cout << "15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
+        cout << "Display Processes in ReadyQueue:" << endl;
+
 
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;
