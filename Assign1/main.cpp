@@ -4,8 +4,13 @@
 #include <cstdlib>
 #include <sys/time.h>
 #include "ReadyQueue.h"
+#include "PCB.h"
 
 using namespace std;
+//Make function to process test 1 and 2 and call it in main
+void Test1();
+void Test2();
+
 
 int main(int argc, char* argv[]) {
 
@@ -25,7 +30,7 @@ int main(int argc, char* argv[]) {
         cout << "15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
 
         //ADD PCB TO QUEUE USING ADD FUNCTION?
-
+/*
         queue.display();
 
         cout << "Remove the process with the highest priority from q1 and diplay q1." << endl;
@@ -37,9 +42,7 @@ int main(int argc, char* argv[]) {
         
         queue.display();
 
-
-
-
+*/
 
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;

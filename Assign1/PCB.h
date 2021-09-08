@@ -23,4 +23,5 @@ public:
 	ProcState state;
 
 	// TODO: Add constructor and other necessary functions for the PCB class
+	PCB();
 };
