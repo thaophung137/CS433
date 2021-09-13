@@ -29,6 +29,9 @@ void ReadyQueue::add(PCB* pcbPtr)
     count++;
     //trickleup(); // moves the job to the right place
   }
+  else {
+    cout << "Error: Full! Cannot add PCB to queue.";
+  }
 }
 
 //ADD PCB REMOVEHIGHEST FUNCTION HERE
