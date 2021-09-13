@@ -24,4 +24,13 @@ public:
 
 	// TODO: Add constructor and other necessary functions for the PCB class
 	PCB();
+  PCB(int,int,ProcState);
+
+  int getID();
+  int getPriority();
+  ProcState getState();
+  void setID(int);
+  void setPriority(int);
+  void setState(ProcState state);
+  
 };
