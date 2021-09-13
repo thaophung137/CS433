@@ -24,7 +24,11 @@ PCB ReadyQueue::getElement(int id) {
 void ReadyQueue::add(PCB* pcbPtr)
 {
   //FINISH function
-  
+  if(count < MAX) {
+    pArray[count] = *pcbPtr;
+    count++;
+    //trickleup(); // moves the job to the right place
+  }
 }
 
 //ADD PCB REMOVEHIGHEST FUNCTION HERE
