@@ -3,15 +3,21 @@
 
 #pragma once
 
-#include "PCB.h"
+# include "PCB.h"
+# include "Max-Heap.h"
 
 /**
  * ReadyQueue is a queue of PCB's that are in the READY state to be scheduled to run.
  * It should be a priority queue here uch that the process with the highest priority
  * can be selected next.
  */
+
+int const MAX = 50;
+
 class ReadyQueue {
   private: 
+    //PCB *pArray;
+    PCB *pArray;
     int count; //how many PCB present
     
   public:
@@ -32,4 +38,5 @@ class ReadyQueue {
         // Prints the queue contents to standard output.
         void display();
 
+        PCB getElement(int id);
 };
