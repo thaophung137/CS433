@@ -5,10 +5,21 @@ using namespace std;
 
 // TODO: Add your implementation of ReadyQueue functions here
 
-/*ReadyQueue::ReadyQueue()
+ReadyQueue::ReadyQueue()
 {
-  numElements = 0;
-}*/
+  //pArray = new PCB[50];
+  count = 0; //initialize to no PCB for now
+}
+
+ReadyQueue::~ReadyQueue()
+{
+
+}
+
+
+PCB ReadyQueue::getElement(int id) {
+  return pArray[id];
+}
 
 void ReadyQueue::add(PCB* pcbPtr)
 {
@@ -20,11 +31,18 @@ void ReadyQueue::add(PCB* pcbPtr)
 
 int ReadyQueue::size() 
 {
-  //FINISH function
+  return count;
 }
 
 void ReadyQueue:: display() 
 {
   //FINISH function
   cout << "Display Processes in ReadyQueue:" << endl;
+
+  for(int i = 0; i <= count; i++) {
+    //cout << Q[i] << " ";
+    cout << pArray[i].id << pArray[i].priority; //<< ProcStates::pArray[i].state;
+  }
+  cout << endl;
+  
 }
