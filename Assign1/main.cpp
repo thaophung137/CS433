@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <sys/time.h>
+#include <string>
 #include "ReadyQueue.h"
 #include "PCB.h"
 
@@ -12,10 +13,7 @@ void Test1();
 void Test2();
 
 
-int main(int argc, char* argv[]) {
-
-  ReadyQueue queue;
-  PCB pcb;
+int main() {
         //Print basic information about the program
         cout << "CS 433 Programming assignment 1" << endl;
         cout << "Author: Thao Phung and Sophia Nguyen" << endl;
