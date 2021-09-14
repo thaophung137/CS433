@@ -6,17 +6,17 @@
 
 using namespace std;
 // TODO: Add your implementation of ReadyQueue functions here
+//Constructor
 ReadyQueue::ReadyQueue(){
-
 }
-
+//Destructor
 ReadyQueue::~ReadyQueue(){
-    
 }
+//This function return the size of the heap
 int ReadyQueue::size(){
     return data.size();
 }
-
+//This function returns true if the heap is empty. 
 bool ReadyQueue::isEmpty(){
     return data.empty();
 }
@@ -71,6 +71,7 @@ void ReadyQueue::addPCB(PCB value){
             return;
         }
     }
+    //Set the PCB state as ready and add the value into the vector, then bubble up. 
     value.setState(READY);
     data.emplace_back(value);
     bubbleUp(data.size()-1);
@@ -91,13 +92,14 @@ void ReadyQueue::deleteMax(){
     bubbleDown(0);
 }
 
+//This function displays the heap with the ID, Priority, and State. 
 void ReadyQueue::display(){
     ProcState currentState;
-    cout << "Queue: \n";
-    cout << "ID" << "\t\t" << "Priority" "\t\t" << "State" << endl;
+    cout << "Display processes in the queue: \n";
+    cout << "ID" << "\t\t" << "Priority" "\t" << "State" << endl;
     cout << "---------------------------------------" << endl;
     for(int i = 0; i < data.size(); i++){
         currentState = data[i].getState();
-        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t\t\t" << data[i].formatState(currentState) << endl;
+        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t" << data[i].formatState(currentState) << endl;
     }
 }

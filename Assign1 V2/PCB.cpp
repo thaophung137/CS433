@@ -66,6 +66,5 @@ string PCB::formatState(ProcState state) {
         return "Terminated";
     }
   }
-
 }
  

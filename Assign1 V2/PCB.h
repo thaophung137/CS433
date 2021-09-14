@@ -34,11 +34,11 @@ public:
 	~PCB();
 
 	int getID();
-  int getPriority();
-  ProcState getState();
+ 	int getPriority();
+  	ProcState getState();
 	void setID(int);
-  void setPriority(int);
+  	void setPriority(int);
  	void setState(ProcState pcdState);
-  string formatState(ProcState state);
+  	string formatState(ProcState state);
   
 };
