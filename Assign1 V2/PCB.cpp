@@ -1,4 +1,7 @@
+#include <iostream>
 #include "PCB.h"
+
+using namespace std;
 
 // TODO: Add your implementation here
 PCB::PCB(){
@@ -38,3 +41,31 @@ void PCB::setPriority(int pcdPriority) {
 void PCB::setState(ProcState pcdState) {
   state = pcdState;
 }
+
+string PCB::formatState(ProcState state) {
+  switch (state)
+  {
+    case NEW:
+    {
+        return "New";
+    }
+    case READY:
+    {
+        return "Ready";
+    }
+    case RUNNING:
+    {
+        return "Running";
+    }
+    case WAITING:
+    {
+        return "Waiting";
+    }
+    case TERMINATED:
+    {
+        return "Terminated";
+    }
+  }
+
+}
+ 
