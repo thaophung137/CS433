@@ -40,5 +40,4 @@ public:
   	void setPriority(int);
  	void setState(ProcState pcdState);
   	string formatState(ProcState state);
-  
 };

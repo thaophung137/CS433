@@ -1,8 +1,6 @@
 // Remember to add comments to your code
 // ...
-
 #pragma once
-
 #include <vector>
 #include "PCB.h"
 

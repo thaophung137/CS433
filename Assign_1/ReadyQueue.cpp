@@ -82,6 +82,7 @@ void ReadyQueue::addPCB(PCB value){
     bubbleUp(data.size()-1);
 }
 
+//Remove the highest priority process from the queue and set the state as running. 
 PCB ReadyQueue::removehighestPCB(){
     PCB temp = data[0];
     deleteMax();

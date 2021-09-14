@@ -35,18 +35,19 @@ int main(){
         cout << "15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
 
         ReadyQueue Q;
+        //Add processes 15, 6, 23, 39, 8 in to the queue and display
         Q.addPCB(createProcess(15));
         Q.addPCB(createProcess(6));
         Q.addPCB(createProcess(23));
         Q.addPCB(createProcess(39));
         Q.addPCB(createProcess(8));
-        Q.display();
+        Q.display();            
 
         cout << "Remove the process with the highest priority from q1 and diplay q1." << endl;
         Q.removehighestPCB();
         Q.display();
 
-
+        //Add processes 47, 1, 37, 5 into the queue and display the content
         cout << "47, 1, 37, and 5 to q1. Display the content of q1." << endl;
         Q.addPCB(createProcess(47));
         Q.addPCB(createProcess(1));
@@ -54,11 +55,11 @@ int main(){
         Q.addPCB(createProcess(5));
         Q.display();
 
-
         cout << "Remove the process with the highest priority from q1 and diplay q1." << endl;
         Q.removehighestPCB();
         Q.display();
 
+        //Add processes 43, 17, 32, 12, 19 into the queue and display
         cout << "43, 17, 32, 12, and 19 to q1. Display the content of q1." << endl;
         Q.addPCB(createProcess(43));
         Q.addPCB(createProcess(17));
@@ -76,4 +77,7 @@ int main(){
 
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;
+        cout << "----------------------------------" << endl;
+        ReadyQueue Q2;
+        
 }
