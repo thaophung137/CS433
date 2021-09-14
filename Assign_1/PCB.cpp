@@ -1,15 +1,22 @@
+/********************************************************************************************
+CS 433 Programming assignment 1
+Author: Thao Phung and Sophia Nguyen
+Course: CS 433 (Operating Systems)
+*******************************************************************************************/
 #include <iostream>
 #include "PCB.h"
 
 using namespace std;
 
 // TODO: Add your implementation here
+//Constructor
 PCB::PCB(){
     id = 0;
     priority = 0;
     state = ProcState::NEW;
 }
 
+//Destructor
 PCB::~PCB(){};
 
 PCB::PCB(int pcbID, int PCBPriority, ProcState pcbState){

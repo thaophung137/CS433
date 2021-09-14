@@ -1,3 +1,8 @@
+/********************************************************************************************
+CS 433 Programming assignment 1
+Author: Thao Phung and Sophia Nguyen
+Course: CS 433 (Operating Systems)
+*******************************************************************************************/
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -9,6 +14,7 @@ using namespace std;
 
 PCB createProcess(int value);
 
+//This function creates a new Process with the value and set the state as NEW. 
 PCB createProcess(int value){
     PCB *pcb = new PCB(value, value, ProcState::NEW);
     return *pcb;

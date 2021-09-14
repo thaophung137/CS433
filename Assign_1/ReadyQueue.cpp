@@ -1,3 +1,8 @@
+/********************************************************************************************
+CS 433 Programming assignment 1
+Author: Thao Phung and Sophia Nguyen
+Course: CS 433 (Operating Systems)
+*******************************************************************************************/
 #include <iostream>
 #include <cmath>
 #include <iomanip>
