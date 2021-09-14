@@ -17,6 +17,10 @@ int ReadyQueue::size(){
     return data.size();
 }
 
+bool ReadyQueue::isEmpty(){
+    return data.empty();
+}
+
 //Recursive function to bubbles down the tree to the correct position. 
 void ReadyQueue::bubbleDown(int idx){
     int size = data.size();
@@ -78,7 +82,6 @@ PCB ReadyQueue::removehighestPCB(){
     temp.setState(RUNNING);
     return temp;
 }
-
 void ReadyQueue::deleteMax(){
     if(data.empty()){
         return;
@@ -87,9 +90,14 @@ void ReadyQueue::deleteMax(){
     data.pop_back();
     bubbleDown(0);
 }
+
 void ReadyQueue::display(){
-    cout << "Queue: ";
+    ProcState currentState;
+    cout << "Queue: \n";
+    cout << "ID" << "\t\t" << "Priority" "\t\t" << "State" << endl;
+    cout << "---------------------------------------" << endl;
     for(int i = 0; i < data.size(); i++){
-        cout << "ID: " << data[i].getID() << "\t\tPriority: " << data[i].getPriority() << endl;
+        currentState = data[i].getState();
+        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t\t\t" << data[i].formatState(currentState) << endl;
     }
 }
