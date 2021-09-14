@@ -4,7 +4,7 @@
 #pragma once
 
 # include "PCB.h"
-# include "Max-Heap.h"
+# include "MaxHeap.h"
 
 /**
  * ReadyQueue is a queue of PCB's that are in the READY state to be scheduled to run.
