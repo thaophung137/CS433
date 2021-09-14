@@ -1,16 +1,16 @@
 #pragma once
 
+using namespace std;
+#include <iostream>
+#include <string>
+
 // Remember to add comments to your code
 // ...
 
 // enum class of process state
 // A process (PCB) in ready queue should be in READY state
 enum ProcState {
-	NEW = 0, 
-	READY = 1, 
-	RUNNING = 2, 
-	WAITING = 3, 
-	TERMINATED = 4
+  NEW, READY, RUNNING, WAITING, TERMINATED
 };
 
 /* 
@@ -34,10 +34,11 @@ public:
 	~PCB();
 
 	int getID();
-  	int getPriority();
-  	ProcState getState();
+  int getPriority();
+  ProcState getState();
 	void setID(int);
-  	void setPriority(int);
+  void setPriority(int);
  	void setState(ProcState pcdState);
+  string formatState(ProcState state);
+  
 };
-
