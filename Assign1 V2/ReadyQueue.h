@@ -24,6 +24,7 @@ public:
 	int size();                 // Prints the queue contents to standard output.
 	void display();				//display the content of the heap
 	void deleteMax();
+  bool isEmpty();
 private:
     std::vector<PCB> data; 
     void bubbleDown(int idx);
