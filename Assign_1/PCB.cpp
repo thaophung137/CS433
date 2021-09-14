@@ -24,15 +24,15 @@ PCB::PCB(int pcbID, int PCBPriority, ProcState pcbState){
     priority = PCBPriority;
     state = pcbState;
 }
-
+//Return the ID of the process
 int PCB::getID(){
   return id;
 }
-
+//Return of the priority of the process
 int PCB::getPriority(){
   return priority;
 }
-
+//Return the state of the process
 ProcState PCB::getState(){
   return state;
 }

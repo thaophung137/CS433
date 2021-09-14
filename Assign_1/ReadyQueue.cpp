@@ -26,7 +26,7 @@ bool ReadyQueue::isEmpty(){
     return data.empty();
 }
 
-//Recursive function to bubbles down the tree to the correct position. 
+//PURPOSE: Recursive function to bubbles down the tree to the correct position. 
 void ReadyQueue::bubbleDown(int idx){
     int size = data.size();
     //get left and right child at the index. 
@@ -51,7 +51,7 @@ void ReadyQueue::bubbleDown(int idx){
     }
 }
 
-//Recursive function to bubble up the tree to the correct position
+//PURPOSE: Recursive function to bubble up the tree to the correct position
 void ReadyQueue::bubbleUp(int idx){
     //if idx is 0, we are at root so no need to bubble up. 
     if(idx == 0){
@@ -69,7 +69,7 @@ void ReadyQueue::bubbleUp(int idx){
 }
 
 
-//Insert a new value into the heap
+//PURPOSE: Insert a new value into the heap
 void ReadyQueue::addPCB(PCB value){
     for(int i = 0; i<data.size(); i++){
         if(value.getID() == data[i].getID()){
@@ -82,7 +82,7 @@ void ReadyQueue::addPCB(PCB value){
     bubbleUp(data.size()-1);
 }
 
-//Remove the highest priority process from the queue and set the state as running. 
+//PURPOSE: Remove the highest priority process from the queue and set the state as running. 
 PCB ReadyQueue::removehighestPCB(){
     PCB temp = data[0];
     deleteMax();
@@ -98,7 +98,7 @@ void ReadyQueue::deleteMax(){
     bubbleDown(0);
 }
 
-//This function displays the heap with the ID, Priority, and State. 
+//PURPOSE: This function displays the heap with the ID, Priority, and State. 
 void ReadyQueue::display(){
     ProcState currentState;
     cout << "Display processes in the queue: \n";
