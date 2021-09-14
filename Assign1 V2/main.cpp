@@ -21,6 +21,24 @@ int main(){
         cout << "----------------------------------" << endl;
         cout << "15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
 
+        ReadyQueue Q;
+        PCB *pcb1 = new PCB(15,15,ProcState::NEW);
+        PCB *pcb2 = new PCB(6,6,ProcState::NEW);
+        PCB *pcb3 = new PCB(23,23,ProcState::NEW);
+        PCB *pcb4 = new PCB(39,39,ProcState::NEW);
+        PCB *pcb5 = new PCB(8,8,ProcState::NEW);
+
+        Q.addPCB(*pcb1);
+        Q.addPCB(*pcb2);
+        Q.addPCB(*pcb3);
+        Q.addPCB(*pcb4);
+        Q.addPCB(*pcb5);
+        Q.display();
+
+        cout << "Remove the process with the highest priority from q1 and diplay q1." << endl;
+        Q.removehighestPCB();
+        Q.display();
+
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;
 }
