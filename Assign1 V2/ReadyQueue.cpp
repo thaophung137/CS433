@@ -71,7 +71,7 @@ void ReadyQueue::addPCB(PCB value){
     data.emplace_back(value);
     bubbleUp(data.size()-1);
 }
-/*
+
 PCB ReadyQueue::removehighestPCB(){
     PCB temp = data[0];
     deleteMax();
@@ -86,10 +86,10 @@ void ReadyQueue::deleteMax(){
     data[0] = data.back();
     data.pop_back();
     bubbleDown(0);
-}*/
+}
 void ReadyQueue::display(){
     cout << "Queue: ";
     for(int i = 0; i < data.size(); i++){
-        cout << data[i].getID() << endl;
+        cout << "ID: " << data[i].getID() << "\t\tPriority: " << data[i].getPriority() << endl;
     }
 }
