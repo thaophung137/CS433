@@ -1,8 +1,3 @@
-/********************************************************************************************
-CS 433 Programming assignment 1
-Author: Thao Phung and Sophia Nguyen
-Course: CS 433 (Operating Systems)
-*******************************************************************************************/
 #include <iostream>
 #include <cmath>
 #include <iomanip>
@@ -11,22 +6,22 @@ Course: CS 433 (Operating Systems)
 
 using namespace std;
 // TODO: Add your implementation of ReadyQueue functions here
-//Constructor
 ReadyQueue::ReadyQueue(){
+
 }
-//Destructor
+
 ReadyQueue::~ReadyQueue(){
+    
 }
-//This function return the size of the heap
 int ReadyQueue::size(){
     return data.size();
 }
-//This function returns true if the heap is empty. 
+
 bool ReadyQueue::isEmpty(){
     return data.empty();
 }
 
-//PURPOSE: Recursive function to bubbles down the tree to the correct position. 
+//Recursive function to bubbles down the tree to the correct position. 
 void ReadyQueue::bubbleDown(int idx){
     int size = data.size();
     //get left and right child at the index. 
@@ -51,7 +46,7 @@ void ReadyQueue::bubbleDown(int idx){
     }
 }
 
-//PURPOSE: Recursive function to bubble up the tree to the correct position
+//Recursive function to bubble up the tree to the correct position
 void ReadyQueue::bubbleUp(int idx){
     //if idx is 0, we are at root so no need to bubble up. 
     if(idx == 0){
@@ -69,20 +64,18 @@ void ReadyQueue::bubbleUp(int idx){
 }
 
 
-//PURPOSE: Insert a new value into the heap
+//Insert a new value into the heap
 void ReadyQueue::addPCB(PCB value){
     for(int i = 0; i<data.size(); i++){
         if(value.getID() == data[i].getID()){
             return;
         }
     }
-    //Set the PCB state as ready and add the value into the vector, then bubble up. 
     value.setState(READY);
     data.emplace_back(value);
     bubbleUp(data.size()-1);
 }
 
-//PURPOSE: Remove the highest priority process from the queue and set the state as running. 
 PCB ReadyQueue::removehighestPCB(){
     PCB temp = data[0];
     deleteMax();
@@ -98,14 +91,25 @@ void ReadyQueue::deleteMax(){
     bubbleDown(0);
 }
 
-//PURPOSE: This function displays the heap with the ID, Priority, and State. 
+bool ReadyQueue::checkDup(PCB pcb) {
+  for(int i = 0; i < data.size(); i++)
+  {
+    if(pcb.getPriority() == data[i].getPriority())
+    {
+      
+      return true;
+    }
+  }
+  return false;
+}
+
 void ReadyQueue::display(){
     ProcState currentState;
-    cout << "Display processes in the queue: \n";
-    cout << "ID" << "\t\t" << "Priority" "\t" << "State" << endl;
+    cout << "Queue: \n";
+    cout << "ID" << "\t\t" << "Priority" "\t\t" << "State" << endl;
     cout << "---------------------------------------" << endl;
     for(int i = 0; i < data.size(); i++){
         currentState = data[i].getState();
-        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t" << data[i].formatState(currentState) << endl;
+        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t\t\t" << data[i].formatState(currentState) << endl;
     }
 }
