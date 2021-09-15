@@ -1,6 +1,8 @@
 // Remember to add comments to your code
 // ...
+
 #pragma once
+
 #include <vector>
 #include "PCB.h"
 
@@ -17,14 +19,16 @@ public:
 	// You may use different parameter signatures from the example below
 
 	// add a PCB representing a process into the ready queue.
-	void addPCB(PCB pcbPtr);    // remove and return the PCB with the highest priority from the queue
+	void addPCB(PCB);    // remove and return the PCB with the highest priority from the queue
 	PCB removehighestPCB();           // Returns the number of elements in the queue.
 	int size();                 // Prints the queue contents to standard output.
 	void display();				//display the content of the heap
 	void deleteMax();
   bool isEmpty();
+  bool checkDup(PCB);
 private:
     std::vector<PCB> data; 
-    void bubbleDown(int idx);
-    void bubbleUp(int idx);
+    void bubbleDown(int);
+    void bubbleUp(int);
+
 };
