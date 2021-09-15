@@ -75,9 +75,50 @@ int main(){
           Q.display();
         }
 
+
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;
-        cout << "----------------------------------" << endl;
+        struct timeval tim; 
+        gettimeofday(&tim, NULL);  
+        double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
         ReadyQueue Q2;
+        int random;
         
+
+        //initialize random seed
+        srand (time(NULL));
+
+        
+        for(int i = 1; i <= 100; i++) { 
+          random = rand() % 50 + 1;  //generate a random priority between 1 and 50:
+          Q2.addPCB(createProcess(random));
+        }
+
+        for(int i = 1; i <=10; i++){
+          int equalProb = (rand() % 100);
+
+          if(equalProb < 50)
+          {
+            if(Q2.checkDup(Q2.removehighestPCB()) == true)
+            {
+              //REMOVE PCB
+              
+            }
+
+          }
+          else if(equalProb>=50)
+          {
+            Q2.addPCB(createProcess(rand() % 50 + 1));
+          }
+          else if(Q2.isEmpty())
+          {
+            cout << "The queue is currently empty. Cannot remove PCB." << endl;
+          }
+
+          Q2.display();
+        }
+
+        gettimeofday(&tim, NULL);  
+        double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+        printf("%.6lf seconds elapsed\n", endTime-startTime);  
 }
