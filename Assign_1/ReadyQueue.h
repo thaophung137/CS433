@@ -1,6 +1,8 @@
 // Remember to add comments to your code
 // ...
 
+using namespace std;
+
 #pragma once
 
 #include <vector>
@@ -13,21 +15,19 @@
  */
 class ReadyQueue {
 public:
-    ReadyQueue();
-    ~ReadyQueue();
-	// TODO: Implement the required functions. Add necessary member fields and functions
-	// You may use different parameter signatures from the example below
+    ReadyQueue(); //default constructor
+	
 
-	// add a PCB representing a process into the ready queue.
-	void addPCB(PCB);    // remove and return the PCB with the highest priority from the queue
-	PCB removehighestPCB();           // Returns the number of elements in the queue.
-	int size();                 // Prints the queue contents to standard output.
-	void display();				//display the content of the heap
+	void addPCB(PCB); // add a PCB representing a process into the ready queue.
+	PCB removehighestPCB();  // remove and return the PCB with the highest priority from the queue           
+	int size(); // Returns the number of elements in the queue.              
+	void display();	// Prints the queue contents to standard output. Display the content of the heap
 	void deleteMax();
   bool isEmpty();
   bool checkDup(PCB);
+
 private:
-    std::vector<PCB> data; 
+    vector<PCB> data; 
     void bubbleDown(int);
     void bubbleUp(int);
 
