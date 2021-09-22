@@ -10,13 +10,7 @@ using namespace std;
 
 //PURPOSE: default constructor of ReadyQueue
 ReadyQueue::ReadyQueue(){
-  vector<PCB> data;
-}
-
-//PURPOSE: deconstructor of ReadyQueue
-ReadyQueue::~ReadyQueue(){
-  data.clear();
-    
+ 
 }
 
 //PURPOSE: get the size of the vector
@@ -89,7 +83,6 @@ PCB ReadyQueue::removehighestPCB(){
     PCB temp = data[0];
     deleteMax();
     temp.setState(RUNNING);
-    //cout << "TEMP ID/PR: " << temp.getID() << "/"<< temp.getPriority()<<endl;
     return temp;
 }
 
