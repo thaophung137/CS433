@@ -23,7 +23,7 @@ public:
 	int size(); // Returns the number of elements in the queue.              
 	void display();	// Prints the queue contents to standard output. Display the content of the heap
 	void deleteMax();
-  bool isEmpty();
+  	bool isEmpty();
 
 private:
     vector<PCB> data; 
