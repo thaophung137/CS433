@@ -93,7 +93,7 @@ int main(){
         
 
         //initialize random seed
-        srand (time(NULL));
+        srand(time(NULL));
 
         //initially add 100 PCB with ID's 1-100 into queue
         for(int i = 1; i <= 100; i++) { 
@@ -106,13 +106,13 @@ int main(){
         for(int i = 1; i <=1000000; i++){
           int equalProb = (rand() % 100);
 
-          if(equalProb < 50)
+          if(equalProb <= 50)
           {
             Q2.removehighestPCB();
           }
-          else if(equalProb>=50)
+          else if(equalProb>50)
           {
-            Q2.addPCB(createProcess(rand() % 50 + 1));
+            Q2.addPCB(createProcessID(i,rand() % 50 + 1));
           }
           else if(Q2.isEmpty())
           {
