@@ -105,11 +105,11 @@ int main(){
         for(int i = 1; i <=1000000; i++){
           int equalProb = (rand() % 100);
 
-          if(equalProb < 50)
+          if(equalProb <= 50)
           {
             Q2.removehighestPCB();
           }
-          else if(equalProb>=50)
+          else if(equalProb>50)
           {
             Q2.addPCB(createProcessID(i,rand() % 50 + 1));
           }
@@ -120,7 +120,7 @@ int main(){
           
         }
         Q2.display();
-        cout << "QUEUE HAS: " << Q2.size() << endl;
+        cout << "QUEUE SIZE: " << Q2.size() << endl;
 
         gettimeofday(&tim, NULL);  
         double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
