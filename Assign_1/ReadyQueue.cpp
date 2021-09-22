@@ -42,7 +42,7 @@ void ReadyQueue::bubbleDown(int idx){
         PCB temp = data[idx];
         data[idx] = data[largest];
         data[largest] = temp;
-        bubbleDown(idx);
+        bubbleDown(largest);
     }
 }
 
@@ -96,7 +96,6 @@ bool ReadyQueue::checkDup(PCB pcb) {
   {
     if(pcb.getPriority() == data[i].getPriority())
     {
-      
       return true;
     }
   }
@@ -106,10 +105,10 @@ bool ReadyQueue::checkDup(PCB pcb) {
 void ReadyQueue::display(){
     ProcState currentState;
     cout << "Queue: \n";
-    cout << "ID" << "\t\t" << "Priority" "\t\t" << "State" << endl;
+    cout << "ID" << "\t\t" << "Priority" "\t\t" << endl;
     cout << "---------------------------------------" << endl;
     for(int i = 0; i < data.size(); i++){
         currentState = data[i].getState();
-        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t\t\t" << data[i].formatState(currentState) << endl;
+        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t" << endl;
     }
 }

@@ -101,8 +101,7 @@ int main(){
           Q2.addPCB(createProcessID(i,random));
              
         }
-        PCB newProc;
-        int randPrior;
+
         for(int i = 1; i <=1000000; i++){
           int equalProb = (rand() % 100);
 
@@ -112,12 +111,7 @@ int main(){
           }
           else if(equalProb>50)
           {
-            randPrior = rand() % 50 + 1;
-            newProc = createProcessID(i, randPrior);
-            
-            if(!(Q2.checkDup(newProc))){
-              Q2.addPCB(newProc);
-            }
+            Q2.addPCB(createProcessID(i,rand() % 50 + 1));
           }
           else if(Q2.isEmpty())
           {
@@ -132,3 +126,4 @@ int main(){
         double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
         printf("%.6lf seconds elapsed\n", endTime-startTime);  
 }
+
