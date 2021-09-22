@@ -20,6 +20,12 @@ PCB createProcess(int value){
     return *pcb;
 }
 
+//This function creates a new Process with the id and priority and set the state as NEW. 
+PCB createProcessID(int pID, int value){
+    PCB *pcb = new PCB(pID, value, ProcState::NEW);
+    return *pcb;
+}
+
 int main(){
     //Print basic information about the program
         cout << "CS 433 Programming assignment 1" << endl;
@@ -81,6 +87,7 @@ int main(){
         struct timeval tim; 
         gettimeofday(&tim, NULL);  
         double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
+
         ReadyQueue Q2;
         int random;
         
@@ -88,23 +95,20 @@ int main(){
         //initialize random seed
         srand (time(NULL));
 
-        
+        //initially add 100 PCB with ID's 1-100 into queue
         for(int i = 1; i <= 100; i++) { 
           random = rand() % 50 + 1;  //generate a random priority between 1 and 50:
-          Q2.addPCB(createProcess(random));
+          Q2.addPCB(createProcessID(i,random));
+          
+          
         }
 
-        for(int i = 1; i <=10; i++){
+        for(int i = 1; i <=1000000; i++){
           int equalProb = (rand() % 100);
 
           if(equalProb < 50)
           {
-            if(Q2.checkDup(Q2.removehighestPCB()) == true)
-            {
-              //REMOVE PCB
-              
-            }
-
+            Q2.removehighestPCB();
           }
           else if(equalProb>=50)
           {
@@ -114,9 +118,9 @@ int main(){
           {
             cout << "The queue is currently empty. Cannot remove PCB." << endl;
           }
-
-          Q2.display();
+          
         }
+        Q2.display();
 
         gettimeofday(&tim, NULL);  
         double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
