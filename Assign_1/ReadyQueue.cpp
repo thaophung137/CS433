@@ -102,19 +102,6 @@ void ReadyQueue::deleteMax(){
     bubbleDown(0);
 }
 
-//PURPOSE: check if there are duplicate priority numbers in the queue
-bool ReadyQueue::checkDup(PCB pcb) {
-  for(int i = 0; i < data.size(); i++)
-  {
-    if(pcb.getPriority() == data[i].getPriority())
-    {
-      data.erase(data.begin() + i);
-      return true;
-    }
-  }
-  return false;
-}
-
 //PURPOSE: display the information of each PCB nicely
 void ReadyQueue::display(){
     ProcState currentState;
