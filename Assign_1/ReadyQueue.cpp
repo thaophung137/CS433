@@ -75,9 +75,9 @@ void ReadyQueue::bubbleUp(int idx){
 //PURPOSE: Insert a new value into the heap
 void ReadyQueue::addPCB(PCB value){
     for(int i = 0; i<data.size(); i++){
-        if(value.getID() == data[i].getID()){
+        /*if(value.getID() == data[i].getID()){
             return;
-        }
+        }*/
     }
     value.setState(READY);
     data.emplace_back(value);
