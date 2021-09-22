@@ -120,7 +120,7 @@ int main(){
           
         }
         Q2.display();
-        cout << "QUEUE SIZE: " << Q2.size() << endl;
+        cout << "QUEUE HAS: " << Q2.size() << endl;
 
         gettimeofday(&tim, NULL);  
         double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
