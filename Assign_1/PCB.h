@@ -4,10 +4,7 @@ using namespace std;
 #include <iostream>
 #include <string>
 
-// Remember to add comments to your code
-// ...
-
-// enum class of process state
+// PURPOSE: enum class of process state
 // A process (PCB) in ready queue should be in READY state
 enum ProcState {
   NEW, READY, RUNNING, WAITING, TERMINATED
@@ -28,16 +25,16 @@ private:
 	// A process in the ReadyQueue should be in READY state
 	ProcState state;
 public:
-	// TODO: Add constructor and other necessary functions for the PCB class
-	PCB();
-	PCB(int pcbID, int PCBPrior, ProcState pcbState);
-	~PCB();
+	PCB();  //default constructor
+	PCB(int pcbID, int PCBPrior, ProcState pcbState); //constructor 
+	~PCB(); //deconstructor
 
-	int getID();
- 	int getPriority();
-  	ProcState getState();
-	void setID(int);
-  	void setPriority(int);
- 	void setState(ProcState pcdState);
-  	string formatState(ProcState state);
+	int getID(); //get the ID number
+  int getPriority(); //get the priority number
+  ProcState getState(); //get the state 
+	void setID(int); //set the ID number
+  void setPriority(int); //set the priority number
+ 	void setState(ProcState pcdState); //set the state 
+  string formatState(ProcState state); //format the state nicely
+  
 };
