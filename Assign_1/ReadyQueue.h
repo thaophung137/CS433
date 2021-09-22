@@ -24,7 +24,6 @@ public:
 	void display();	// Prints the queue contents to standard output. Display the content of the heap
 	void deleteMax();
   bool isEmpty();
-  bool checkDup(PCB);
 
 private:
     vector<PCB> data; 
