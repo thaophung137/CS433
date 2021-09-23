@@ -1,54 +1,56 @@
-/********************************************************************************************
-CS 433 Programming assignment 1
-Author: Thao Phung and Sophia Nguyen
-Course: CS 433 (Operating Systems)
-*******************************************************************************************/
 #include <iostream>
 #include "PCB.h"
 
 using namespace std;
 
-// TODO: Add your implementation here
-//Constructor
+//PURPOSE: Default constructor for PCB that initializes values
 PCB::PCB(){
     id = 0;
     priority = 0;
     state = ProcState::NEW;
 }
 
-//Destructor
-PCB::~PCB(){};
-
+//PURPOSE: Constructor that sets the values of PCB objects
 PCB::PCB(int pcbID, int PCBPriority, ProcState pcbState){
     id = pcbID;
     priority = PCBPriority;
     state = pcbState;
 }
-//Return the ID of the process
+
+//PURPOSE: Deconstructor for PCB
+PCB::~PCB(){};
+
+//PURPOSE: get the ID number of PCB
 int PCB::getID(){
   return id;
 }
-//Return of the priority of the process
+
+//PURPOSE: get the priority number of PCB
 int PCB::getPriority(){
   return priority;
 }
-//Return the state of the process
+
+//PURPOSE: get the state of PCB
 ProcState PCB::getState(){
   return state;
 }
 
+//PURPOSE: set the ID number of PCB
 void PCB::setID(int pcdID) {
   id = pcdID;
 }
 
+//PURPOSE: set the priority number of PCB
 void PCB::setPriority(int pcdPriority) {
   priority = pcdPriority;
 }
 
+//PURPOSE: set the state of PCB
 void PCB::setState(ProcState pcdState) {
   state = pcdState;
 }
 
+//PURPOSE: format the state of PCB as a string
 string PCB::formatState(ProcState state) {
   switch (state)
   {
@@ -73,5 +75,6 @@ string PCB::formatState(ProcState state) {
         return "Terminated";
     }
   }
+
 }
  
