@@ -5,23 +5,27 @@
 #include "PCB.h"
 
 using namespace std;
-// TODO: Add your implementation of ReadyQueue functions here
+//PURPOSE: constructor for ReadyQueue
 ReadyQueue::ReadyQueue(){
 
 }
 
+//PURPOSE: destructor for ReadyQueue
 ReadyQueue::~ReadyQueue(){
     
 }
+
+//PURPOSE: get the size of the vector
 int ReadyQueue::size(){
     return data.size();
 }
 
+//PURPOSE: check if vector is empty
 bool ReadyQueue::isEmpty(){
     return data.empty();
 }
 
-//Recursive function to bubbles down the tree to the correct position. 
+//PURPOSE: Recursive function to bubbles down the tree to the correct position. 
 void ReadyQueue::bubbleDown(int idx){
     int size = data.size();
     //get left and right child at the index. 
@@ -29,11 +33,12 @@ void ReadyQueue::bubbleDown(int idx){
     int right = 2*idx + 2;              //right child
 
     int largest = idx;
-    //if existing left is smaller than index, set largest as the left child.
+    //if existing left is greater than index, set largest as the left child.
     if(left < size && data[left].getPriority() > data[idx].getPriority()){
         largest = left;
     }
 
+    //if existing right is greater than the largest index, set largest as the right child.
     if(right < size && data[right].getPriority() > data[largest].getPriority()){
         largest = right;
     }
@@ -46,7 +51,7 @@ void ReadyQueue::bubbleDown(int idx){
     }
 }
 
-//Recursive function to bubble up the tree to the correct position
+//PURPOSE: Recursive function to bubble up the tree to the correct position
 void ReadyQueue::bubbleUp(int idx){
     //if idx is 0, we are at root so no need to bubble up. 
     if(idx == 0){
@@ -64,19 +69,14 @@ void ReadyQueue::bubbleUp(int idx){
 }
 
 
-//Insert a new value into the heap
+//PURPOSE:Insert a new value into the heap
 void ReadyQueue::addPCB(PCB value){
-    for(int i = 0; i < data.size(); i++){
-        /*if(value.getID() == data[i].getID()){
-            return;
-        }*/
-    }
-    value.setState(READY);
-    data.emplace_back(value);
-    bubbleUp(data.size()-1);
-    //cout<< "SIZE IN FUNC: " << data.size() << endl;
+  value.setState(READY);
+  data.emplace_back(value);
+  bubbleUp(data.size()-1);
 }
 
+//PURPOSE:returns highest priority PCB
 PCB ReadyQueue::removehighestPCB(){
     PCB temp = data[0];
     deleteMax();
@@ -84,12 +84,15 @@ PCB ReadyQueue::removehighestPCB(){
     return temp;
 }
 
+//PURPOSE: get the highest priority
 PCB ReadyQueue::getMax()
 {
   return data[0];
 }
 
-void ReadyQueue::deleteMax(){
+//PURPOSE: delete the highest PCB and restructure the heap
+void ReadyQueue::deleteMax()
+{
     if(data.empty()){
         return;
     }
@@ -98,24 +101,21 @@ void ReadyQueue::deleteMax(){
     bubbleDown(0);
 }
 
+//PURPOSE: check for duplicate priorities. If duplicate, remove process
 bool ReadyQueue::checkDup(PCB pcb) {
   for(int i = 1; i < data.size(); i++)
   {
     if(pcb.getPriority() == data[i].getPriority())
     {
       int eraseAt = i-1;
-      //cout << "I: " << i << endl;
-      //cout << "MAX IN input: " << pcb.getID() << "  PRI: " << pcb.getPriority()<< endl;
-      //cout << "MAX IN queue: " << data[i].getID() << "  PRI: " << data[i].getPriority() << endl;
       data.erase(data.begin()+eraseAt);
-      //cout << "SIZE IN DUP FUNC: " << data.size() <<endl;
       return true;
-    }
-    
+    } 
   }
   return false;
 }
 
+//PURPOSE: display and format the attributes of the processes in the queue nicely
 void ReadyQueue::display(){
     ProcState currentState;
     cout << "Queue: \n";
