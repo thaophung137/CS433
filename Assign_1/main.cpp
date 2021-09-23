@@ -67,7 +67,7 @@ int main(){
         Q.display();
 
         //Add processes 43, 17, 32, 12, 19 into the queue and display
-        cout << "43, 17, 32, 12, and 19 to q1. Display the content of q1." << endl;
+        cout << "Add processes 43, 17, 32, 12, and 19 to q1. Display the content of q1." << endl;
         Q.addPCB(createProcess(43));
         Q.addPCB(createProcess(17));
         Q.addPCB(createProcess(32));
@@ -101,67 +101,47 @@ int main(){
         { 
           random = rand() % 50 + 1;  //generate a random priority between 1 and 50:
           Q2.addPCB(createProcessID(i,random));
-          //Q2.display();
              
         }
         
-        int numDup = 0;
-        int numR = 0;
-        int numA = 0;
-        int numE = 0;
-        cout << "QUEUE SIZE B4: " << Q2.size() << endl;
         for(int i = 1; i <=1000000; i++){
           
-          int equalProb = (rand() % 100);
-          //cout << "QUEUE SIZE IN: " << Q2.size() << endl;
-          //Q2.display();
-          if(equalProb <= 50)
+          int equalProb = (rand() % 100); //get 50/50 chance
+
+          //50 chance of removing the process
+          if(equalProb<=50)
           {
-            //cout << "MAX IS: " << Q2.getMax().getID() << "PRI: "<< Q2.getMax().getPriority() << endl;
-            //cout << "B4 FALSE" << endl;
+            
+            //check for duplicates and remove process that has been there the longest
             if (Q2.checkDup(Q2.getMax())==true)
             {
-              //cout << "SIZE B4 REM: " << Q2.size() << endl;
-              //Q2.removehighestPCB();
-              
-              numDup++;
-               //cout << "SIZE AFTER REM: " << Q2.size() << endl;
+
             }
 
-            //cout << "B4 TRUE" << endl;
+            //no duplicate priorities so just remove the highest priority
             else
             {
               Q2.removehighestPCB();
-              //cout << "SIZE B4 DUP: " << Q2.size() << endl;
-              //Q2.checkDup(Q2.getMax());
-              numR++;
-              //cout << "SIZE AFTER DUP: " << Q2.size() << endl;
+
             }
             
           }
+          //50 chance of adding a process
           if(equalProb>50)
           {
-            //cout << "SIZE B4 ADD: " << Q2.size() << endl;
             Q2.addPCB(createProcessID(i,rand()%50+1));
-            //Q2.display();
-            //cout << "SIZE AFTER ADD: " << Q2.size() << endl;
-            numA++;
-            
           }
         }
           if(Q2.isEmpty())
           {
             cout << "The queue is currently empty. Cannot remove PCB." << endl;
-            numE++;
+  
           }
         
         Q2.display();
-        cout << "DUP: " << numDup << endl;
-        cout << "REM: " << numR << endl;
-        cout << "ADD: " << numA << endl;
-        cout << "EMPTY: " << numE << endl;
         cout << "QUEUE SIZE: " << Q2.size() << endl;
 
+        //get the execution time
         gettimeofday(&tim, NULL);  
         double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
         printf("%.6lf seconds elapsed\n", endTime-startTime);  
