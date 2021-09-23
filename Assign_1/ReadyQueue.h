@@ -16,21 +16,21 @@ using namespace std;
 class ReadyQueue {
 public:
     ReadyQueue(); //default constructor
-    ~ReadyQueue();
+    ~ReadyQueue(); //destructor
 	
 
 	void addPCB(PCB); // add a PCB representing a process into the ready queue.
-	PCB removehighestPCB();  // remove and return the PCB with the highest priority from the queue           
+	PCB removehighestPCB();  // call functions to remove and return the PCB with the highest priority from the queue           
 	int size(); // Returns the number of elements in the queue.              
 	void display();	// Prints the queue contents to standard output. Display the content of the heap
-	void deleteMax();
-  	bool isEmpty();
-  	bool checkDup(PCB);
-  	PCB getMax();
+	void deleteMax(); //remove PCB and restructure the heap
+  bool isEmpty();//check if queue is empty
+  bool checkDup(PCB);//check for duplicate priorities
+  PCB getMax(); //get the max priority
 
 private:
-    vector<PCB> data; 
-    void bubbleDown(int);
-    void bubbleUp(int);
+    vector<PCB> data; //vector to store PCBs
+    void bubbleDown(int);//bubbles down the tree to the correct position
+    void bubbleUp(int);//bubbles up the tree to the correct position 
 
 };
