@@ -66,14 +66,15 @@ void ReadyQueue::bubbleUp(int idx){
 
 //Insert a new value into the heap
 void ReadyQueue::addPCB(PCB value){
-    for(int i = 0; i<data.size(); i++){
-        if(value.getID() == data[i].getID()){
+    for(int i = 0; i < data.size(); i++){
+        /*if(value.getID() == data[i].getID()){
             return;
-        }
+        }*/
     }
     value.setState(READY);
     data.emplace_back(value);
     bubbleUp(data.size()-1);
+    //cout<< "SIZE IN FUNC: " << data.size() << endl;
 }
 
 PCB ReadyQueue::removehighestPCB(){
@@ -82,6 +83,12 @@ PCB ReadyQueue::removehighestPCB(){
     temp.setState(RUNNING);
     return temp;
 }
+
+PCB ReadyQueue::getMax()
+{
+  return data[0];
+}
+
 void ReadyQueue::deleteMax(){
     if(data.empty()){
         return;
@@ -92,12 +99,19 @@ void ReadyQueue::deleteMax(){
 }
 
 bool ReadyQueue::checkDup(PCB pcb) {
-  for(int i = 0; i < data.size(); i++)
+  for(int i = 1; i < data.size(); i++)
   {
     if(pcb.getPriority() == data[i].getPriority())
     {
+      int eraseAt = i-1;
+      //cout << "I: " << i << endl;
+      //cout << "MAX IN input: " << pcb.getID() << "  PRI: " << pcb.getPriority()<< endl;
+      //cout << "MAX IN queue: " << data[i].getID() << "  PRI: " << data[i].getPriority() << endl;
+      data.erase(data.begin()+eraseAt);
+      //cout << "SIZE IN DUP FUNC: " << data.size() <<endl;
       return true;
     }
+    
   }
   return false;
 }
@@ -105,10 +119,10 @@ bool ReadyQueue::checkDup(PCB pcb) {
 void ReadyQueue::display(){
     ProcState currentState;
     cout << "Queue: \n";
-    cout << "ID" << "\t\t" << "Priority" "\t\t" << endl;
+    cout << "ID" << "\t\t" << "Priority" "\t\t" << "State" << endl;
     cout << "---------------------------------------" << endl;
     for(int i = 0; i < data.size(); i++){
         currentState = data[i].getState();
-        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t" << endl;
+        cout << data[i].getID() << "\t\t" << data[i].getPriority() << "\t\t\t\t" << data[i].formatState(currentState) << endl;
     }
 }
