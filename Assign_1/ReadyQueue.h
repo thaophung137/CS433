@@ -16,6 +16,7 @@ using namespace std;
 class ReadyQueue {
 public:
     ReadyQueue(); //default constructor
+    ~ReadyQueue();
 	
 
 	void addPCB(PCB); // add a PCB representing a process into the ready queue.
@@ -24,7 +25,8 @@ public:
 	void display();	// Prints the queue contents to standard output. Display the content of the heap
 	void deleteMax();
   	bool isEmpty();
-	bool checkDup(PCB);
+  	bool checkDup(PCB);
+  	PCB getMax();
 
 private:
     vector<PCB> data; 
