@@ -13,6 +13,7 @@ Course: CS 433 (Operating Systems)
 using namespace std;
 
 PCB createProcess(int value);
+PCB createProcessID(int pID, int value);
 
 //This function creates a new Process with the value and set the state as NEW. 
 PCB createProcess(int value){
@@ -22,8 +23,8 @@ PCB createProcess(int value){
 
 //This function creates a new Process with the id and priority and set the state as NEW. 
 PCB createProcessID(int pID, int value){
-    PCB *pcb = new PCB(pID, value, ProcState::NEW);
-    return *pcb;
+    PCB *pcb2 = new PCB(pID, value, ProcState::NEW);
+    return *pcb2;
 }
 
 int main(){
@@ -34,11 +35,11 @@ int main(){
         cout << "Course: CS 433 (Operating Systems)" << endl;
         cout << "Description : Program to implement a priority ready queue of processes" << endl;
         cout << "=================================" << endl;
-
+        
         // TODO: Add your code for Test 1
         cout << "Performing Test 1" << endl;
         cout << "----------------------------------" << endl;
-        cout << "15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
+        cout << "Add processes 15, 6, 23, 39, and 8 to q1. Display the content of q1." << endl;
 
         ReadyQueue Q;
         //Add processes 15, 6, 23, 39, 8 in to the queue and display
@@ -54,7 +55,7 @@ int main(){
         Q.display();
 
         //Add processes 47, 1, 37, 5 into the queue and display the content
-        cout << "47, 1, 37, and 5 to q1. Display the content of q1." << endl;
+        cout << "Add processes 47, 1, 37, and 5 to q1. Display the content of q1." << endl;
         Q.addPCB(createProcess(47));
         Q.addPCB(createProcess(1));
         Q.addPCB(createProcess(37));
@@ -80,7 +81,7 @@ int main(){
           Q.removehighestPCB();
           Q.display();
         }
-
+        
 
         // TODO: Add your code for Test 2
         cout << "Performing Test 2" << endl;
@@ -96,36 +97,69 @@ int main(){
         srand(time(NULL));
 
         //initially add 100 PCB with ID's 1-100 into queue
-        for(int i = 1; i <= 100; i++) { 
+        for(int i = 1; i <= 100; i++) 
+        { 
           random = rand() % 50 + 1;  //generate a random priority between 1 and 50:
           Q2.addPCB(createProcessID(i,random));
+          //Q2.display();
              
         }
-        PCB newProc;
-        int randPrior;
+        
+        int numDup = 0;
+        int numR = 0;
+        int numA = 0;
+        int numE = 0;
+        cout << "QUEUE SIZE B4: " << Q2.size() << endl;
         for(int i = 1; i <=1000000; i++){
+          
           int equalProb = (rand() % 100);
-
+          //cout << "QUEUE SIZE IN: " << Q2.size() << endl;
+          //Q2.display();
           if(equalProb <= 50)
           {
-            Q2.removehighestPCB();
-          }
-          else if(equalProb>50)
-          {
-            randPrior = rand() % 50 + 1;
-            newProc = createProcessID(i, randPrior);
-            
-            if(!(Q2.checkDup(newProc))){
-              Q2.addPCB(newProc);
+            //cout << "MAX IS: " << Q2.getMax().getID() << "PRI: "<< Q2.getMax().getPriority() << endl;
+            //cout << "B4 FALSE" << endl;
+            if (Q2.checkDup(Q2.getMax())==true)
+            {
+              //cout << "SIZE B4 REM: " << Q2.size() << endl;
+              //Q2.removehighestPCB();
+              
+              numDup++;
+               //cout << "SIZE AFTER REM: " << Q2.size() << endl;
             }
+
+            //cout << "B4 TRUE" << endl;
+            else
+            {
+              Q2.removehighestPCB();
+              //cout << "SIZE B4 DUP: " << Q2.size() << endl;
+              //Q2.checkDup(Q2.getMax());
+              numR++;
+              //cout << "SIZE AFTER DUP: " << Q2.size() << endl;
+            }
+            
           }
-          else if(Q2.isEmpty())
+          if(equalProb>50)
+          {
+            //cout << "SIZE B4 ADD: " << Q2.size() << endl;
+            Q2.addPCB(createProcessID(i,rand()%50+1));
+            //Q2.display();
+            //cout << "SIZE AFTER ADD: " << Q2.size() << endl;
+            numA++;
+            
+          }
+        }
+          if(Q2.isEmpty())
           {
             cout << "The queue is currently empty. Cannot remove PCB." << endl;
+            numE++;
           }
-          
-        }
+        
         Q2.display();
+        cout << "DUP: " << numDup << endl;
+        cout << "REM: " << numR << endl;
+        cout << "ADD: " << numA << endl;
+        cout << "EMPTY: " << numE << endl;
         cout << "QUEUE SIZE: " << Q2.size() << endl;
 
         gettimeofday(&tim, NULL);  
