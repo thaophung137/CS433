@@ -8,6 +8,7 @@ Course: CS 433 (Operating Systems)
 #include <unistd.h>
 #include <iostream>
 #include <cstring>
+#include "Shell.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ int main(void)
 
   char *args[MAX_LINE/2 + 1]; /* command line arguments */
   int should_run = 1; /* flag to determine when to exit program */
+  Shell shell;
   while (should_run) 
   { 
     char userInput[100];
@@ -49,11 +51,9 @@ int main(void)
       i++;
       
     }
-    /**
-    * After reading user input, the steps are:
-    * (1) fork a child process using fork()
-    * (2) the child process will invoke execvp()
-    * (3) parent will invoke wait() unless command included & */
+
+    shell.execCommandShell(args);
+   
     should_run = 0;
   }
   return 0;
