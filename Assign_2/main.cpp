@@ -12,7 +12,7 @@ Course: CS 433 (Operating Systems)
 
 using namespace std;
 
-#define MAX_LINE 80 /* The maximum length command */
+
 
 int main(void)
 {
@@ -41,6 +41,7 @@ int main(void)
 
     //parse user input
     ptr = strtok(userInput," ");
+   
 
     //store tokens in an array of character strings
     while(ptr!=NULL)
@@ -51,6 +52,17 @@ int main(void)
       i++;
       
     }
+    if (strcmp(args[i-1], "&") == 0) {
+		    args[i-1] = NULL;
+		    shell.ampersand = true;
+      }
+    else {
+	  	// terminated argument list with null
+		  args[i] = NULL;
+		  shell.ampersand = false;
+	  }
+
+
 
     shell.execCommandShell(args);
    
