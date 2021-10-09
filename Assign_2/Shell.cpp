@@ -8,7 +8,8 @@
 
 using namespace std;
 
-void Shell::execCommandShell(char *args[]){
+void Shell::execCommandShell(char *args[])
+{
    /**
     * After reading user input, the steps are:
     * (1) fork a child process using fork()
@@ -31,12 +32,32 @@ void Shell::execCommandShell(char *args[]){
     }
     //parent process
     else{
-      //ADD LOGIC TO CHECK IF AMPERSAND(FALSE -> wait)
-      wait(NULL);
+      if(ampersand ==false)
+      
+        wait(NULL);
     }
 }
 
 void Shell::execCommandUser(char *args[]){
   
+  string command(args[0]);
+	int N;	
+
+  // command is "!!" format, execute the most recent command
+  if (command == "!!") {
+	 
+
+		// error: no recent command in the history
+		if (history.empty()) {
+			cout << "No commands in history." << endl;
+			return;
+		}
+
+			N = history.size();
+	  }
+
+    //echo command
+    cout << history[N - 1] << endl; 
+
 
 }
