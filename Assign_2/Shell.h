@@ -9,8 +9,11 @@ class Shell {
   public:
     void execCommandShell(char *args[]);
     void execCommandUser(char *args[]);
+    void checkRedirection(char *args[]);
     bool ampersand = false;
 
   private:
     vector<string> history;
+    int inputFlag, outputFlag;
+    int inFile, outFile;
 };

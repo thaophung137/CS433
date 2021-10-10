@@ -58,6 +58,25 @@ void Shell::execCommandUser(char *args[]){
 
     //echo command
     cout << history[N - 1] << endl; 
+}
 
-
+void Shell::checkRedirection(char *args[]){
+  for(int i=0; args[i] != NULL; i++){
+    if(strcmp(args[i], "<") == 0){
+      inputFlag = 1;
+      if(args[i+1] == NULL)
+        cout << "Invalid command";
+      else{
+        infile = i + 1;
+      }
+    }
+    if(strcmp(args[i], ">") == 0){
+      outputFlag = 1; 
+       if(args[i+1] == NULL)
+        cout << "Invalid command";
+      else{
+        outfile = i + 1;
+      }
+    }
+  }
 }
