@@ -70,6 +70,14 @@ int main(void)
     }
    
     //should_run = 0;
+    checkRedirection(args);
+
+    if(inputFlag ==1){
+      inFile = open(args[inputFlag]);
+    }
+    if(outputFlag == 1){
+      outFile = open(args[outputFlag]);
+    }
   }
   return 0;
 }

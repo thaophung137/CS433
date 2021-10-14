@@ -18,4 +18,5 @@ class Shell {
     vector<string> history;
     int inputFlag, outputFlag;
     int inFile, outFile;
+    
 };
