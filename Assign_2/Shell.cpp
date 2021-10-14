@@ -8,7 +8,8 @@
 
 using namespace std;
 
-void Shell::execCommandShell(char *args[])
+
+void Shell::runShellCommand(char *args[])
 {
    /**
     * After reading user input, the steps are:
@@ -32,17 +33,17 @@ void Shell::execCommandShell(char *args[])
     }
     //parent process
     else{
-      if(ampersand ==false)
+      if(ampersand == false)
       
         wait(NULL);
     }
 }
 
-void Shell::execCommandUser(char *args[]){
+void Shell::runUserCommand(char *args[]){
   
-  string command(args[0]);
+  string command = args[0];
 	int N;	
-
+  
   // command is "!!" format, execute the most recent command
   if (command == "!!") {
 	 
@@ -54,10 +55,37 @@ void Shell::execCommandUser(char *args[]){
 		}
 
 			N = history.size();
-	  }
+	  
 
     //echo command
     cout << history[N - 1] << endl; 
+
+    //place command into history buffer as next command
+    history.push_back(history[N - 1]);
+    runShellCommand(args);
+  }
+  if(command == "exit") {
+    should_run = 0;
+    return;
+  }
+    
+}
+
+bool Shell::checkValidCommand(char *args[])
+{
+  string command = args[0];
+
+  //it is a valid user command
+  if(command == "!!" || command == "exit")
+  {
+    return true;
+  }
+
+  //it is not a valid user command - it is shell command
+  else
+  {
+    return false;
+  }
 }
 
 void Shell::checkRedirection(char *args[]){
@@ -67,7 +95,7 @@ void Shell::checkRedirection(char *args[]){
       if(args[i+1] == NULL)
         cout << "Invalid command";
       else{
-        infile = i + 1;
+        inFile = i + 1;
       }
     }
     if(strcmp(args[i], ">") == 0){
@@ -75,7 +103,7 @@ void Shell::checkRedirection(char *args[]){
        if(args[i+1] == NULL)
         cout << "Invalid command";
       else{
-        outfile = i + 1;
+        outFile = i + 1;
       }
     }
   }
