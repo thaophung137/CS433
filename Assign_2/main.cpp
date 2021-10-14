@@ -13,7 +13,6 @@ Course: CS 433 (Operating Systems)
 using namespace std;
 
 
-
 int main(void)
 {
   cout << "CS 433 Programming Assignment 2" << endl;
@@ -24,14 +23,13 @@ int main(void)
   cout << "=================================" << endl;
 
   char *args[MAX_LINE/2 + 1]; /* command line arguments */
-  int should_run = 1; /* flag to determine when to exit program */
   Shell shell;
-  while (should_run) 
+  while (shell.should_run) 
   { 
     char userInput[100];
     
     cout << "osh>"; 
-    //fflush(stdout);
+    fflush(stdout);
 
     //get user input
     cin.getline(userInput,100);
@@ -62,11 +60,16 @@ int main(void)
 		  shell.ampersand = false;
 	  }
 
-
-
-    shell.execCommandShell(args);
+    if(shell.checkValidCommand(args) == true)
+    {
+      shell.runUserCommand(args);
+    }
+    else 
+    {
+      shell.runShellCommand(args);
+    }
    
-    should_run = 0;
+    //should_run = 0;
   }
   return 0;
 }
