@@ -73,7 +73,7 @@ int main(void)
     shell.checkRedirection(args);
 
     if(shell.inputFlag ==1){
-      shell.inFile = open(args[inputFlag], O_RDONLY);
+      shell.inFile = open(args[shell.inputFlag], O_RDONLY);
 
       if(shell.inFile < 0){
         cout << "Failed to open file";
