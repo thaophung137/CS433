@@ -1,9 +1,9 @@
 #include <stdio.h> 
 #include <cstdlib>
 #include <unistd.h>
+#include <fcntl.h> 
 #include <iostream>
 #include <cstring>
-#include <sys/wait.h>
 #include "Shell.h"
 
 using namespace std;
