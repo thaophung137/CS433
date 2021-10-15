@@ -8,6 +8,7 @@ Course: CS 433 (Operating Systems)
 #include <unistd.h>
 #include <iostream>
 #include <cstring>
+#include <fstream>
 #include "Shell.h"
 
 using namespace std;
@@ -93,7 +94,7 @@ int main(void)
         return 1;
       }  
       else{
-        shell.savedOut = dup(1);
+        shell.saveOut = dup(1);
         dup2(shell.outFile, 1);
         close(shell.outFile);
       }
