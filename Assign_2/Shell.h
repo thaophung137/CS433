@@ -14,10 +14,11 @@ class Shell {
     bool ampersand = false;
     int should_run = 1; //flag to determine when to exit program
 
-  private:
-    vector<string> history;
     int inputFlag, outputFlag;
     int inFile, outFile;
     int saveIn, saveOut;
+
+  private:
+    vector<string> history;
     
 };
