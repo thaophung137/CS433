@@ -17,6 +17,8 @@ Shell::Shell(){
   saveOut = 0;
 }
 
+Shell::~Shell(){};
+
 void Shell::runShellCommand(char *args[])
 {
    /**

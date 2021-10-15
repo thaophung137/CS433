@@ -9,6 +9,7 @@ Course: CS 433 (Operating Systems)
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <fcntl.h>
 #include "Shell.h"
 
 using namespace std;
