@@ -70,14 +70,35 @@ int main(void)
     }
    
     //should_run = 0;
-    checkRedirection(args);
+    shell.checkRedirection(args);
 
     if(inputFlag ==1){
-      inFile = open(args[inputFlag]);
+      inFile = open(args[inputFlag], O_RDONLY);
+
+      if(inFile < 0){
+        cout << "Failed to open file";
+        return 1;
+      }
+      else{
+        saveIn = dup(0);
+        dup2(inFile, 0);
+        close(inFile);
+      }
     }
+
     if(outputFlag == 1){
-      outFile = open(args[outputFlag]);
+      outFile = open(args[outputFlag],  O_WRONLY | O_CREAT | O_TRUNC| S_IRUSR | S_IWUSR);
+      if(outFile < 0){
+        cout << "Failed to open file";
+        return 1;
+      }  
+      else{
+        savedOut = dup(1);
+        dup2(outFile, 1);
+        close(outFile);
+      }
     }
+  
   }
   return 0;
 }

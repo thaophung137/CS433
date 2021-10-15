@@ -8,6 +8,14 @@
 
 using namespace std;
 
+Shell::Shell(){
+  inputFlag = 0;
+  outputFlag = 0;
+  inFile = 0;
+  outFile = 0;
+  saveIn = 0;
+  saveOut = 0;
+}
 
 void Shell::runShellCommand(char *args[])
 {
