@@ -8,9 +8,9 @@ Course: CS 433 (Operating Systems)
 #include <unistd.h>
 #include <iostream>
 #include <cstring>
-#include <fstream>
 #include <fcntl.h>
 #include "Shell.h"
+
 
 using namespace std;
 
@@ -28,39 +28,14 @@ int main(void)
   Shell shell;
   while (shell.should_run) 
   { 
-    char userInput[100];
+    char userInput[MAX_LINE];
     
     cout << "osh>"; 
     fflush(stdout);
 
     //get user input
-    cin.getline(userInput,100);
-
-    char *ptr;
-    int i = 0;
-
-    //parse user input
-    ptr = strtok(userInput," ");
-   
-
-    //store tokens in an array of character strings
-    while(ptr!=NULL)
-    {
-      args[i] = ptr;
-      cout << ptr << endl;
-      ptr = strtok(NULL, " ");
-      i++;
-      
-    }
-    if (strcmp(args[i-1], "&") == 0) {
-		    args[i-1] = NULL;
-		    shell.ampersand = true;
-      }
-    else {
-	  	// terminated argument list with null
-		  args[i] = NULL;
-		  shell.ampersand = false;
-	  }
+    cin.getline(userInput,MAX_LINE);
+    shell.parser(userInput,args);
 
     if(shell.checkValidCommand(args) == true)
     {
@@ -71,10 +46,9 @@ int main(void)
       shell.runShellCommand(args);
     }
    
-    //should_run = 0;
     shell.checkRedirection(args);
 
-    if(shell.inputFlag ==1){
+    if(shell.inputFlag == 1){
       shell.inFile = open(args[shell.inputFlag], O_RDONLY);
 
       if(shell.inFile < 0){
