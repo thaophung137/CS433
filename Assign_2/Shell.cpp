@@ -1,13 +1,14 @@
 #include <stdio.h> 
 #include <cstdlib>
 #include <unistd.h>
-#include <fcntl.h> 
 #include <iostream>
 #include <cstring>
+#include <sys/wait.h>
 #include "Shell.h"
 
 using namespace std;
 
+//PURPOSE: Constructor for Shell class
 Shell::Shell(){
   inputFlag = 0;
   outputFlag = 0;
@@ -15,10 +16,41 @@ Shell::Shell(){
   outFile = 0;
   saveIn = 0;
   saveOut = 0;
+  ampersand = false;
+  should_run = 1;
 }
 
-Shell::~Shell(){};
+//PURPOSE: parse user input into seperate tokens and store as array of character strings
+void Shell::parser(char userInput[], char *args[]) 
+{
+    char *ptr;
+    int i = 0;
 
+    //parse user input
+    ptr = strtok(userInput," ");
+   
+    //store tokens in an array of character strings
+    while(ptr!=NULL)
+    {
+      args[i] = ptr;
+      ptr = strtok(NULL, " ");
+      i++;
+      
+    }
+    //check if user input has &
+    if (strcmp(args[i-1], "&") == 0) {
+		    args[i-1] = NULL;
+		    ampersand = true;
+      }
+    else {
+	  	//terminate argument with null
+		  args[i] = NULL;
+		  ampersand = false;
+	  }
+  
+}
+
+//PURPOSE: run shell command and fork child process
 void Shell::runShellCommand(char *args[])
 {
    /**
@@ -49,6 +81,7 @@ void Shell::runShellCommand(char *args[])
     }
 }
 
+//PURPOSE: run the user command either !! or exit
 void Shell::runUserCommand(char *args[]){
   
   string command = args[0];
@@ -56,8 +89,6 @@ void Shell::runUserCommand(char *args[]){
   
   // command is "!!" format, execute the most recent command
   if (command == "!!") {
-	 
-
 		// error: no recent command in the history
 		if (history.empty()) {
 			cout << "No commands in history." << endl;
@@ -71,16 +102,19 @@ void Shell::runUserCommand(char *args[]){
     cout << history[N - 1] << endl; 
 
     //place command into history buffer as next command
-    history.push_back(history[N - 1]);
+    char buffer[MAX_LINE];
+    strcpy(buffer, history[N-1].c_str());
+    history.push_back(buffer);
+    parser(buffer,args);
     runShellCommand(args);
   }
   if(command == "exit") {
     should_run = 0;
-    return;
   }
     
 }
 
+//PURPOSE:check if it is a valid user command(!! or exit) 
 bool Shell::checkValidCommand(char *args[])
 {
   string command = args[0];
@@ -98,23 +132,18 @@ bool Shell::checkValidCommand(char *args[])
   }
 }
 
+//PURPOSE: check for redirection in user input
 void Shell::checkRedirection(char *args[]){
   for(int i=0; args[i] != NULL; i++){
-    if(strcmp(args[i], "<") == 0){
+    if(strcmp(args[i-2], "<") == 0){
+      args[i-2] = NULL;
       inputFlag = 1;
-      if(args[i+1] == NULL)
-        cout << "Invalid command";
-      else{
-        inFile = i + 1;
-      }
+      inFile = i + 1;
     }
-    if(strcmp(args[i], ">") == 0){
+    if(strcmp(args[i-2], ">") == 0){
+      args[i-2] = NULL;
       outputFlag = 1; 
-       if(args[i+1] == NULL)
-        cout << "Invalid command";
-      else{
-        outFile = i + 1;
-      }
+      outFile = i + 1;
     }
   }
 }
