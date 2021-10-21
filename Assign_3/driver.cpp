@@ -15,16 +15,17 @@
 #include "list.h"
 #include "schedulers.h"
 
+using namespace std; 
 #define SIZE    100
 
 int main(int argc, char *argv[])
 {
-    std::cout << "CS 433 Programming assignment 3" << std::endl;
-    std::cout << "Author: Thao Phung and Sophia" << std::endl;
-    std::cout << "Date: 10/21/2021 " << std::endl;
-    std::cout << "Course: CS433 (Operating Systems)" << std::endl;
-    std::cout << "Description : **** " << std::endl;
-    std::cout << "=================================" << std::endl;
+    cout << "CS 433 Programming assignment 3" << endl;
+    cout << "Author: Thao Phung and Sophia" << endl;
+    cout << "Date: 10/21/2021 " << endl;
+    cout << "Course: CS433 (Operating Systems)" << endl;
+    cout << "Description : **** " << endl;
+    cout << "=================================" << endl;
 
     FILE *in;
     char *temp;
