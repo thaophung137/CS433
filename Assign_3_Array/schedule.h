@@ -1,3 +1,6 @@
+#ifndef SCHEDULE_H
+#define SCHEDULE_H
+
 #include "process.h"
 #include <vector>
 
@@ -9,8 +12,10 @@ class Schedule{
         ~Schedule();
 
     void addTask(Process);
-    
+
     private:
         vector<Process> task;
 
-}
+};
+
+#endif

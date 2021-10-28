@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "schedule.h"
+
 using namespace std; 
 #define SIZE    100
 
