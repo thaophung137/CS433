@@ -4,12 +4,14 @@
  
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
+#include <iomanip>
 #include <string.h>
 
 #include "list.h"
 #include "task.h"
 
-
+using namespace std;
 // add a new task to the list of tasks
 void insert(struct node **head, Task *newTask) {
     // add the new task to the list 
@@ -50,6 +52,7 @@ void traverse(struct node *head) {
 
     while (temp != NULL) {
         printf("[%s] [%d] [%d]\n",temp->task->name, temp->task->priority, temp->task->burst);
+        //cout << temp->task->name << setw(5) << temp->task->priority << setw(5) << temp->task->burst << endl;
         temp = temp->next;
     }
 }

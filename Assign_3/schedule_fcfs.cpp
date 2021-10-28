@@ -9,6 +9,16 @@
  void add(char *name, int priority, int burst) 
 {
 	// TODO: add your implementation here
+	node *temp;
+	temp = (node*)malloc(sizeof(node));
+
+	temp->task->name = name;
+	temp->task->priority = priority;
+	temp->task->burst = burst;
+
+	temp->next = NULL;
+	//Need to insert at the end of node
+
 }
 
 /**
