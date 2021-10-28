@@ -1,9 +1,14 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-class process{
+class Process{
+private:
+    int pid;
+    int arrival;
+    int burst;
+    int priority;
 public:    
-    process();
+    Process();
 
     int getPID();
     int getArrivalTime();
@@ -15,12 +20,6 @@ public:
     float turnaround_time;
     float response_time; 
     float exit_time;
-private:
-    int pid;
-    int arrival;
-    int burst;
-    int priority;
-    int total_wait; 
 };
 
 #endif
