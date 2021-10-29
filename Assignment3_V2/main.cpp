@@ -15,6 +15,7 @@
 #include "schedulers.h"
 #include "FCFS.h"
 #include "SJF.h"
+#include "Priority.h"
 
 using namespace std; 
 
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
 
     FCFS fcfs;
     SJF sjf;
+    Priority p;
     /*schedulers s;
     
     infile = fopen(argv[1],"r");
@@ -59,23 +61,24 @@ int main(int argc, char *argv[])
 
     name = (char*)"T1";
     //fcfs.add(name, 4, 20);
-    sjf.add(name, 4, 22);
+    //sjf.add(name, 4, 22);
+    p.add(name, 4, 22);
     name = (char*)"T2";
     //fcfs.add(name, 5, 21);
-    sjf.add(name, 5, 20);
+    //sjf.add(name, 5, 20);
+    p.add(name, 5, 20);
     name = (char*)"T3";
     //fcfs.add(name, 6, 22);
-    sjf.add(name, 6, 21);
+    //sjf.add(name, 6, 21);
+    p.add(name, 6, 21);
     
     //fcfs.displayAll();
     
 
     // invoke the scheduler
     //fcfs.schedule();
-    sjf.schedule();
-    //fcfs.displayStats();
-    //sjf.displayStats();
-    //s.schedule();
+    //sjf.schedule();
+    p.schedule();
 
     return 0;
 }
