@@ -8,8 +8,9 @@
 
 using namespace std;
 
-FCFS::FCFS() {
-  
+FCFS::FCFS() 
+{
+   doOnce = 0;
   
 }
 
@@ -22,7 +23,8 @@ void FCFS::add(char *name, int priority, int burst)
   aTask.setBurst(burst);
   
   data.push_back(aTask);
-  doOnce = 0;
+
+  initialSize = data.size();
 	
 }
 
@@ -82,7 +84,7 @@ double FCFS::calcAvgWait()
   {
     avgWaitTime += waitTime[i];
   }
-  return avgWaitTime;
+  return avgWaitTime/initialSize;
 }
 
 int FCFS::calcTurnTime()
@@ -117,7 +119,7 @@ double FCFS::calcAvgTurn()
     avgTurnTime += turnTime[i];
     
   }
-  return avgTurnTime;
+  return avgTurnTime/initialSize;
 }
 
 void FCFS::displayStats(Task task)
