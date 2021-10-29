@@ -8,8 +8,10 @@
 
 using namespace std;
 
-SJF::SJF() {
-  
+SJF::SJF() 
+{
+  doOnce = 0;
+	shortestIndex = 0;
   
 }
 
@@ -22,9 +24,7 @@ void SJF::add(char *name, int priority, int burst)
   aTask.setBurst(burst);
   
   data.push_back(aTask);
-  doOnce = 0;
 
-	shortestIndex = 0;
   initialSize = data.size();
 }
 
