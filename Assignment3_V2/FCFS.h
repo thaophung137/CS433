@@ -12,20 +12,18 @@ class FCFS{
     FCFS();
     void add(char*, int, int);
     void schedule();
-    void displayStats(Task);
+    void displayStats();
     
   private:
     vector<Task> data;
-    int doOnce;
+    vector<Task> copyData;
     vector<int>turnTime;
     vector<int>waitTime;
-    int pos = 0;
+    int initialSize;
     int calcTurnTime();
     void calcWaitTime();
     double calcAvgWait();
     double calcAvgTurn();
     Task nextTask();
-    
-    
-    
+
 };
