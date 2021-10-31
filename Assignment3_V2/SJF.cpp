@@ -10,7 +10,6 @@ using namespace std;
 
 SJF::SJF() 
 {
-  doOnce = 0;
 	shortestIndex = 0;
   
 }
@@ -45,10 +44,11 @@ Task SJF::nextTask()
       {
         shortestTask = data[i];
         shortestIndex = i;
-        orderedData.push_back(shortestTask);
+        
       }
     }
   }
+  orderedData.push_back(shortestTask);
   return shortestTask;
 }
 
@@ -61,19 +61,13 @@ void SJF::schedule()
   {
     CPU cpu1;
     Task task1 = nextTask();
-    cpu1.run(task1, task1.getBurst());
-    
-    if(doOnce == 0)
-    {
-      calcTurnTime();
-      calcWaitTime();
-      displayStats(task1);
-      doOnce++;
-    }
-    
+    cpu1.run(task1, task1.getBurst());  
     data.erase(data.begin() + shortestIndex);
     
   }
+  calcTurnTime();
+  calcWaitTime();
+  displayStats();
 }
 
 void SJF::calcWaitTime()
@@ -133,16 +127,18 @@ double SJF::calcAvgTurn()
   return avgTurnTime/initialSize;
 }
 
-void SJF::displayStats(Task task)
+void SJF::displayStats()
 {
-    cout << task.getName() << " turn-around time = ";
+    for(int i = 0; i < orderedData.size(); i++)
+    {
+      cout << orderedData[i].getName() << " turn-around time = ";
    
-    cout << turnTime[pos] << ", waiting time = " << waitTime[pos] << endl;
+      cout << turnTime[i] << ", waiting time = " << waitTime[i] << endl;
+    }
     
     double att = calcAvgTurn();
     double awt = calcAvgWait();
     cout << "Average turn-around time = " << att << ", Average waiting time = " << awt << endl;
 
-    pos++;
 
 }
