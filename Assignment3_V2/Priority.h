@@ -12,15 +12,13 @@ class Priority{
     Priority();
     void add(char*, int, int);
     void schedule();
-    void displayStats(Task);
+    void displayStats();
     
   private:
     vector<Task> data;
     vector<Task> orderedData;
-    int doOnce;
     vector<int>turnTime;
     vector<int>waitTime;
-    int pos = 0;
     int initialSize;
     int highestPriority;
     Task nextTask();
