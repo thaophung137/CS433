@@ -34,6 +34,11 @@ int Task::getBurst()
   return burst;
 }
 
+int Task::getRemainBurst() 
+{
+  return remainBurst;
+}
+
 void Task::setName(char* nameTask)
 {
   name = nameTask;
@@ -47,4 +52,9 @@ void Task::setPriority(int priorityTask)
 void Task::setBurst(int burstTask)
 {
   burst = burstTask;
+}
+
+void Task::setRemainBurst(int remainBurstTask)
+{
+  remainBurst = remainBurstTask;
 }
