@@ -9,7 +9,6 @@
 using namespace std;
 
 Priority::Priority() {
-  doOnce = 0;
   highestPriority = 0;
   
 }
@@ -23,7 +22,6 @@ void Priority::add(char *name, int priority, int burst)
   aTask.setBurst(burst);
   
   data.push_back(aTask);
-
   initialSize = data.size();
 	
 }
@@ -43,13 +41,13 @@ Task Priority::nextTask()
     {
       if(data[i].getPriority() > highPriority.getPriority())
       {
+        
         highPriority = data[i];
         highestPriority = i;
-        orderedData.push_back(highPriority);
-        
       }
     }
   }
+  orderedData.push_back(highPriority); 
   return highPriority;
 }
 
@@ -58,22 +56,18 @@ Task Priority::nextTask()
  *   */
 void Priority::schedule() 
 {
+  
   while(!data.empty())
   {
     CPU cpu1;
     Task task1 = nextTask();
     cpu1.run(task1, task1.getBurst());
-    if(doOnce == 0)
-    {
-      calcTurnTime();
-      calcWaitTime();
-      displayStats(task1);
-      doOnce++;
-    }
-    
     data.erase(data.begin() + highestPriority);
     
-  }
+  } 
+  calcTurnTime();
+  calcWaitTime();
+  displayStats();
   
 }
 
@@ -81,9 +75,9 @@ void Priority::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 0; i < data.size();i++)
+  for(int i = 0; i < orderedData.size();i++)
   {
-    waitingTime = data[i].getBurst() + data[i-1].getBurst();
+    waitingTime = orderedData[i].getBurst() + orderedData[i-1].getBurst();
     waitTime.push_back(waitingTime);
   }
   calcAvgWait();
@@ -93,7 +87,7 @@ double Priority::calcAvgWait()
 {
   double avgWaitTime = 0.0;
 
-  for(int i = 0; i < data.size();i++)
+  for(int i = 0; i < orderedData.size();i++)
   {
     avgWaitTime += waitTime[i];
   }
@@ -103,22 +97,20 @@ double Priority::calcAvgWait()
 int Priority::calcTurnTime()
 {
   int turnAroundTime = 0;
-  
-  for(int i = 0; i < data.size(); i++)
+
+  for(int i = 0; i < orderedData.size(); i++)
   {
-   
     if(i == 0)
     {
-      turnTime.push_back(data[i].getBurst());
+      turnAroundTime = orderedData[i].getBurst();
+      turnTime.push_back(orderedData[i].getBurst());
     }
     else
     {
-      turnAroundTime = turnTime[i-1] + data[i].getBurst();
+      turnAroundTime = turnTime[i-1] + orderedData[i].getBurst();
       turnTime.push_back(turnAroundTime);
-      
     }
   }
-  
   calcAvgTurn();
   return turnAroundTime;
 }
@@ -127,7 +119,7 @@ double Priority::calcAvgTurn()
 {
   double avgTurnTime = 0.0;
 
-  for(int i = 0; i < data.size();i++)
+  for(int i = 0; i < orderedData.size();i++)
   {
     avgTurnTime += turnTime[i];
     
@@ -135,16 +127,18 @@ double Priority::calcAvgTurn()
   return avgTurnTime/initialSize;
 }
 
-void Priority::displayStats(Task task)
+void Priority::displayStats()
 {
-    cout << task.getName() << " turn-around time = ";
+    for(int i = 0; i< orderedData.size();i++)
+    {
+      cout << orderedData[i].getName() << " turn-around time = ";
    
-    cout << turnTime[pos] << ", waiting time = " << waitTime[pos] << endl;
+      cout << turnTime[i] << ", waiting time = " << waitTime[i] << endl;
+    }
     
     double att = calcAvgTurn();
     double awt = calcAvgWait();
     cout << "Average turn-around time = " << att << ", Average waiting time = " << awt << endl;
 
-    pos++;
 
 }
