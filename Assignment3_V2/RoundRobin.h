@@ -24,8 +24,8 @@ class RoundRobin{
     int initialSize;
     int highestPriority;
     Task nextTask();
-    int calcTurnTime();
-    void calcWaitTime();
+    //int calcTurnTime();
+    //void calcWaitTime();
     double calcAvgWait();
     double calcAvgTurn();
     
