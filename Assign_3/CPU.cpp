@@ -3,16 +3,15 @@
  */
 
 #include <stdio.h>
-#include <iostream>
-#include <iomanip>
-#include "task.h"
-#include "cpu.h"
 
-using namespace std;
+#include "Task.h"
+#include "CPU.h"
 
+CPU::CPU()
+{
+  
+}
 // run this task for the specified time slice
-void run(Task *task, int slice) {
-    printf("Running task = [%s] [%d] [%d] for %d units.\n",task->name, task->priority, task->burst, slice);
-
-    //cout << "Running task = " << task->name << setw(5) << task->priority << setw(5) << task->burst << "for " << slice << " units" << endl;
+void CPU::run(Task task, int slice) {
+    printf("Running task = [%s] [%d] [%d] for %d units.\n",task.getName(), task.getPriority(), task.getBurst(), slice);
 }

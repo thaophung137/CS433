@@ -2,15 +2,27 @@
  * Representation of a task in the system.
  */
 
-#ifndef TASK_H
-#define TASK_H
+#pragma once
 
-// representation of a task
-typedef struct task {
+//using namespace std;
+
+class Task {
+  private:
     char *name;
-    int tid;
     int priority;
     int burst;
-} Task;
+    int remainBurst;
 
-#endif
+  public:
+    Task();
+    Task(int);
+    Task(char*,int,int);
+    char* getName();
+    int getPriority();
+    int getBurst();
+    int getRemainBurst();
+    void setName(char*);
+    void setPriority(int);
+    void setBurst(int);
+    void setRemainBurst(int);
+};

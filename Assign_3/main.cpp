@@ -8,12 +8,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <iostream>
+#include <string.h>
 
 #include "Task.h"
 #include "schedulers.h"
 #include "FCFS.h"
+#include "SJF.h"
+#include "Priority.h"
+#include "RoundRobin.h"
 
 using namespace std; 
 
@@ -28,7 +31,7 @@ int main(int argc, char *argv[])
     cout << "Description : **** " << endl;
     cout << "=================================" << endl;
 
-    FILE *infile;
+    FILE *in;
     char *temp;
     char task[SIZE];
 
@@ -37,36 +40,51 @@ int main(int argc, char *argv[])
     int burst;
 
     FCFS fcfs;
+    SJF sjf;
+    Priority p;
+    RoundRobin rr;
+
+     in = fopen(argv[1],"r");
     
-    /*infile = fopen(argv[1],"r");
-    
-    while (fgets(task,SIZE,infile) != NULL) {
+    while (fgets(task,SIZE,in) != NULL) {
         temp = strdup(task);
         name = strsep(&temp,",");
         priority = atoi(strsep(&temp,","));
         burst = atoi(strsep(&temp,","));
 
         // add the task to the scheduler's list of tasks
-        fcfs.add(name,priority,burst);
+        rr.add(name,priority,burst);
 
         free(temp);
     }
 
-    fclose(infile);*/
-    name = (char*)"T1";
-    fcfs.add(name, 4, 20);
-    name = (char*)"T2";
-    fcfs.add(name, 5, 21);
-    name = (char*)"T3";
-    fcfs.add(name, 6, 22);
-    
-    //fcfs.displayAll();
-    
-
+    fclose(in);
 
     // invoke the scheduler
-    fcfs.schedule();
-    //fcfs.displayStats();
+    rr.schedule();
+
+    //name = (char*)"T1";
+    //fcfs.add(name, 4, 20);
+    //sjf.add(name, 4, 22);
+    //p.add(name, 4, 22);
+    //rr.add(name, 4,22);
+    //name = (char*)"T2";
+    //fcfs.add(name, 5, 21);
+    //sjf.add(name, 5, 20);
+    //p.add(name, 5, 20);
+    //rr.add(name, 5, 20);
+    //name = (char*)"T3";
+    //fcfs.add(name, 6, 22);
+    //sjf.add(name, 6, 21);
+    //p.add(name, 6, 21);
+    //rr.add(name, 6, 21);
+    
+    
+    // invoke the scheduler
+    //fcfs.schedule();
+    //sjf.schedule();
+    //p.schedule();
+    //rr.schedule();
 
     return 0;
 }
