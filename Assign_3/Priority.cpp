@@ -30,6 +30,8 @@ void Priority::add(char *name, int priority, int burst)
 Task Priority::nextTask()
 {
   Task highPriority;
+  highestPriority = 0;
+
   if(data.empty())
   {
     cout << "Error: No tasks." << endl;
@@ -37,13 +39,15 @@ Task Priority::nextTask()
   else
   {
     highPriority = data[0];
-    for(int i = 0; i < data.size(); i++)
+    for(int i = 1; i < data.size(); i++)
     {
-      if(data[i].getPriority() > highPriority.getPriority())
+      if(data[i].getPriority() >= highPriority.getPriority())
       {
-        
-        highPriority = data[i];
-        highestPriority = i;
+        if(data[i].getPriority() > highPriority.getPriority())
+        {
+          highPriority = data[i];
+          highestPriority = i;
+        }
       }
     }
   }
@@ -75,9 +79,9 @@ void Priority::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 1; i < orderedData.size();i++)
   {
-    waitingTime = orderedData[i].getBurst() + orderedData[i-1].getBurst();
+    waitingTime = waitTime[i-1] + orderedData[i-1].getBurst();
     waitTime.push_back(waitingTime);
   }
   calcAvgWait();
