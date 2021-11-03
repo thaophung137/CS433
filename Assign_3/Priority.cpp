@@ -4,17 +4,18 @@
 #include <iostream>
 #include <sys/time.h>
 
-#include "Priority.h"
+#include "SJF.h"
 
 using namespace std;
 
-Priority::Priority() {
-  highestPriority = 0;
+SJF::SJF() 
+{
+	shortestIndex = 0;
   
 }
 
 // add a new task to the list of tasks
-void Priority::add(char *name, int priority, int burst) 
+void SJF::add(char *name, int priority, int burst) 
 {
   Task aTask;
   aTask.setName(name);
@@ -22,60 +23,59 @@ void Priority::add(char *name, int priority, int burst)
   aTask.setBurst(burst);
   
   data.push_back(aTask);
+
   initialSize = data.size();
-	
 }
 
 
-Task Priority::nextTask()
+Task SJF::nextTask()
 {
-  Task highPriority;
-  highestPriority = 0;
-
+  Task shortestTask;
+  shortestIndex = 0;
   if(data.empty())
   {
     cout << "Error: No tasks." << endl;
   }
   else
   {
-    highPriority = data[0];
+    shortestTask = data[0];
+    
     for(int i = 1; i < data.size(); i++)
     {
-      if(data[i].getPriority() >= highPriority.getPriority())
+      if(data[i].getBurst() <= shortestTask.getBurst())
       {
-        if(data[i].getPriority() > highPriority.getPriority())
+        if(data[i].getBurst() < shortestTask.getBurst())
         {
-          highPriority = data[i];
-          highestPriority = i;
+          shortestTask = data[i];
+          shortestIndex = i;
+
         }
       }
     }
   }
-  orderedData.push_back(highPriority); 
-  return highPriority;
+  orderedData.push_back(shortestTask);
+  return shortestTask;
 }
 
 /**
  *  * Run the FCFS scheduler
  *   */
-void Priority::schedule() 
+void SJF::schedule() 
 {
-  
   while(!data.empty())
   {
     CPU cpu1;
     Task task1 = nextTask();
-    cpu1.run(task1, task1.getBurst());
-    data.erase(data.begin() + highestPriority);
+    cpu1.run(task1, task1.getBurst());  
+    data.erase(data.begin() + shortestIndex);
     
-  } 
+  }
   calcTurnTime();
   calcWaitTime();
   displayStats();
-  
 }
 
-void Priority::calcWaitTime()
+void SJF::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
@@ -87,7 +87,7 @@ void Priority::calcWaitTime()
   calcAvgWait();
 }
 
-double Priority::calcAvgWait()
+double SJF::calcAvgWait()
 {
   double avgWaitTime = 0.0;
 
@@ -98,28 +98,28 @@ double Priority::calcAvgWait()
   return avgWaitTime/initialSize;
 }
 
-int Priority::calcTurnTime()
+int SJF::calcTurnTime()
 {
   int turnAroundTime = 0;
-
+  
   for(int i = 0; i < orderedData.size(); i++)
   {
     if(i == 0)
     {
-      turnAroundTime = orderedData[i].getBurst();
       turnTime.push_back(orderedData[i].getBurst());
     }
-    else
-    {
+    else{
       turnAroundTime = turnTime[i-1] + orderedData[i].getBurst();
       turnTime.push_back(turnAroundTime);
+      
     }
   }
+  
   calcAvgTurn();
   return turnAroundTime;
 }
 
-double Priority::calcAvgTurn()
+double SJF::calcAvgTurn()
 {
   double avgTurnTime = 0.0;
 
@@ -131,9 +131,9 @@ double Priority::calcAvgTurn()
   return avgTurnTime/initialSize;
 }
 
-void Priority::displayStats()
+void SJF::displayStats()
 {
-    for(int i = 0; i< orderedData.size();i++)
+    for(int i = 0; i < orderedData.size(); i++)
     {
       cout << orderedData[i].getName() << " turn-around time = ";
    
