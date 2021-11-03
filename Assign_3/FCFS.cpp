@@ -5,7 +5,6 @@
 #include <sys/time.h>
 
 #include "FCFS.h"
-#include "schedulers.h"
 
 using namespace std;
 
@@ -63,9 +62,9 @@ void FCFS::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 1; i < copyData.size();i++)
+  for(int i = 0; i < copyData.size();i++)
   {
-    waitingTime = waitTime[i-1] + copyData[i-1].getBurst();
+    waitingTime = copyData[i].getBurst() + copyData[i-1].getBurst();
     waitTime.push_back(waitingTime);
   }
   calcAvgWait();

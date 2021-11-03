@@ -24,6 +24,10 @@ using namespace std;
 
 #define SIZE 100
 
+void scheduleHandlers(string sche, char* c, int priority, int burst){
+
+}
+
 int main(int argc, char *argv[])
 {
     cout << "CS 433 Programming assignment 3" << endl;
@@ -33,7 +37,16 @@ int main(int argc, char *argv[])
     cout << "Description : **** " << endl;
     cout << "=================================" << endl;
 
-    //char *name;
+    int TQ = 10;
+    //Check that input file is provided at command line
+    if(argc < 2){
+        cerr << "Usage: " << argv[0] << " <input_file> [<time_quantum>]" << endl;
+        exit(1);
+    }
+
+    if(argc >= 3){
+        TQ = atoi(argv[2]);
+    }
     string name;
     int priority;
     int burst;
@@ -83,8 +96,7 @@ int main(int argc, char *argv[])
     //sjf.add(name, 6, 21);
     //p.add(name, 6, 21);
     //rr.add(name, 6, 21);
-    
-    
+
     // invoke the scheduler
     //fcfs.schedule();
     //sjf.schedule();

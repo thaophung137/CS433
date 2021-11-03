@@ -31,7 +31,6 @@ void SJF::add(char *name, int priority, int burst)
 Task SJF::nextTask()
 {
   Task shortestTask;
-  shortestIndex = 0;
   if(data.empty())
   {
     cout << "Error: No tasks." << endl;
@@ -39,17 +38,13 @@ Task SJF::nextTask()
   else
   {
     shortestTask = data[0];
-    
-    for(int i = 1; i < data.size(); i++)
+    for(int i = 0; i < data.size(); i++)
     {
-      if(data[i].getBurst() <= shortestTask.getBurst())
+      if(data[i].getBurst() < shortestTask.getBurst())
       {
-        if(data[i].getBurst() < shortestTask.getBurst())
-        {
-          shortestTask = data[i];
-          shortestIndex = i;
-
-        }
+        shortestTask = data[i];
+        shortestIndex = i;
+        
       }
     }
   }
@@ -79,10 +74,11 @@ void SJF::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 1; i < orderedData.size();i++)
+  for(int i = 0; i < orderedData.size();i++)
   {
-    waitingTime = waitTime[i-1] + orderedData[i-1].getBurst();
+    waitingTime = orderedData[i].getBurst() + orderedData[i-1].getBurst();
     waitTime.push_back(waitingTime);
+    
   }
   calcAvgWait();
 }
