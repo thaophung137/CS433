@@ -29,7 +29,17 @@ int main(int argc, char *argv[])
     cout << "Description : **** " << endl;
     cout << "=================================" << endl;
 
-    //char *name;
+    int TQ; //Time Quantum
+    //Check that input file is provided at command line
+    if(argc < 2){
+        cerr << "Usage: " << argv[0] << " <input_file> [<time_quantum>]" << endl;
+        exit(1);
+    }
+
+    if(argc >= 3){
+        TQ = atoi(argv[2]);
+    }
+
     string name;
     int priority;
     int burst;
