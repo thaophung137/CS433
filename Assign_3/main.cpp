@@ -5,11 +5,13 @@
  *
  *  [name] [priority] [CPU burst]
  */
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream>
 #include <string.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 #include "Task.h"
 #include "schedulers.h"
@@ -31,11 +33,8 @@ int main(int argc, char *argv[])
     cout << "Description : **** " << endl;
     cout << "=================================" << endl;
 
-    FILE *in;
-    char *temp;
-    char task[SIZE];
-
-    char *name;
+    //char *name;
+    string name;
     int priority;
     int burst;
 
@@ -44,25 +43,31 @@ int main(int argc, char *argv[])
     Priority p;
     RoundRobin rr;
 
-     in = fopen(argv[1],"r");
-    
-    while (fgets(task,SIZE,in) != NULL) {
-        temp = strdup(task);
-        name = strsep(&temp,",");
-        priority = atoi(strsep(&temp,","));
-        burst = atoi(strsep(&temp,","));
+    // open the input file
+    ifstream infile(argv[1]);
+    string line;
+    while(getline(infile, line) ) {
+        istringstream ss (line);
+        // Get the task name
+        getline(ss, name, ',');
+        
+        // Get the task priority 
+        string token;
+        getline(ss, token, ',');
+        priority = stoi(token);
 
-        // add the task to the scheduler's list of tasks
-        rr.add(name,priority,burst);
-
-        free(temp);
+        // Get the task burst length 
+        getline(ss, token, ',');
+        burst = stoi(token);
+        
+        char* c = strcpy(new char[name.length() + 1], name.c_str());
+        cout << c << " " << priority << " " << burst << endl;
+        fcfs.add(c, priority, burst);
+        // TODO: add the task to the scheduler's ready queue
+        // You will need a data structure, i.e. PCB, to represent a task 
     }
 
-    fclose(in);
-
-    // invoke the scheduler
-    rr.schedule();
-
+    fcfs.schedule();
     //name = (char*)"T1";
     //fcfs.add(name, 4, 20);
     //sjf.add(name, 4, 22);
