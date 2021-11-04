@@ -15,3 +15,8 @@ CPU::CPU()
 void CPU::run(Task task, int slice) {
     printf("Running task = [%s] [%d] [%d] for %d units.\n",task.getName(), task.getPriority(), task.getBurst(), slice);
 }
+
+// run this task for the specified time slice
+void CPU::run2(Task task, int slice) {
+    printf("Running task = [%s] [%d] [%d] for %d units.\n",task.getName(), task.getPriority(), task.getRemainBurst(), slice);
+}
