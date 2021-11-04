@@ -5,11 +5,10 @@
 #include <sys/time.h>
 
 #include "schedulers.h"
+#include "CPU.h"
 
 using namespace std;
 
-
-// PURPOSE: add a new task to the list of tasks
 void schedulers::add(char *name, int priority, int burst) 
 {
   Task aTask;
@@ -17,6 +16,22 @@ void schedulers::add(char *name, int priority, int burst)
   aTask.setPriority(priority);
   aTask.setBurst(burst);
   aTask.setRemainBurst(burst);
+  
+  data.push_back(aTask);
+  orderedData.push_back(aTask);
+  initialSize = data.size();
+	
+}
+
+// PURPOSE: add a new task to the list of tasks with time quantum
+void schedulers::add(char *name, int priority, int burst,int TQ) 
+{
+  Task aTask;
+  aTask.setName(name);
+  aTask.setPriority(priority);
+  aTask.setBurst(burst);
+  aTask.setRemainBurst(burst);
+  aTask.setTQ(TQ);
   
   data.push_back(aTask);
   orderedData.push_back(aTask);
@@ -44,11 +59,11 @@ void schedulers::schedule()
   {
     CPU cpu1;
     Task task1 = nextTask();
-    if(task1.getRemainBurst() <= QUANTUM)
+    if(task1.getRemainBurst() <= task1.getTQ())
     {
       RunTime += task1.getRemainBurst();
 
-      cpu1.run(task1, task1.getRemainBurst());
+      cpu1.run2(task1, task1.getRemainBurst());
       task1.setRemainBurst(0);
 
       cout << "TurnAround time for " << task1.getName() << " is: " << RunTime << endl;
@@ -62,15 +77,13 @@ void schedulers::schedule()
       orderedData.erase(orderedData.begin());
     }
     else {
-      RunTime += QUANTUM;
-      cpu1.run(task1, QUANTUM);
-      task1.setRemainBurst(task1.getRemainBurst()-QUANTUM);
+      RunTime += task1.getTQ();
+      cpu1.run2(task1, task1.getTQ());
+      task1.setRemainBurst(task1.getRemainBurst()-task1.getTQ());
       orderedData.push_back(task1);
       orderedData.erase(orderedData.begin());
     }
   } 
-  //calcTurnTime();
-  //calcWaitTime();
 
   displayStats();
 }
@@ -83,7 +96,7 @@ void runTurnTime(){
 double schedulers::calcAvgTurn(){
   double totalTurnTime = 0;
 
-  for(int i = 0; i< turnTime.size(); i++){
+  for(int i = 0; i< (int)turnTime.size(); i++){
     totalTurnTime += turnTime[i];
   }
 
@@ -95,7 +108,7 @@ double schedulers::calcAvgWait()
 {
   double totalWaitTime = 0;
 
-  for(int i = 0; i < waitTime.size();i++)
+  for(int i = 0; i < (int)waitTime.size();i++)
   {
     totalWaitTime += waitTime[i];
   }
