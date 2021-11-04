@@ -6,12 +6,6 @@ Task::Task()
 
 }
 
-//Task constructor
-Task::Task(int x)
-{
-
-}
-
 //PURPOSE: Task constructor with name, priority, and burst attributes
 Task::Task(char *name, int priority, int burst)
 {
@@ -44,6 +38,12 @@ int Task::getRemainBurst()
   return remainBurst;
 }
 
+//PURPOSE: get the time quantum of the task
+int Task::getTQ() 
+{
+  return TQ;
+}
+
 //PURPOSE: set the name of the task
 void Task::setName(char* nameTask)
 {
@@ -66,4 +66,10 @@ void Task::setBurst(int burstTask)
 void Task::setRemainBurst(int remainBurstTask)
 {
   remainBurst = remainBurstTask;
+}
+
+//PURPOSE: set the remaining burst of the task
+void Task::setTQ(int timeQuantum)
+{
+  TQ = timeQuantum;
 }
