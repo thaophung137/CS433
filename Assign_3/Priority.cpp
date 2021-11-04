@@ -4,17 +4,13 @@
 #include <iostream>
 #include <sys/time.h>
 
-#include "Priority.h"
+#include "schedulers.h"
 
 using namespace std;
 
-Priority::Priority() {
-  highestPriority = 0;
-  
-}
 
-// add a new task to the list of tasks
-void Priority::add(char *name, int priority, int burst) 
+// PURPOSE: add a new task to the list of tasks
+void schedulers::add(char *name, int priority, int burst) 
 {
   Task aTask;
   aTask.setName(name);
@@ -26,10 +22,28 @@ void Priority::add(char *name, int priority, int burst)
 	
 }
 
+// PURPOSE: add a new task to the list of tasks with time quantum
+void schedulers::add(char *name, int priority, int burst,int TQ) 
+{
+  Task aTask;
+  aTask.setName(name);
+  aTask.setPriority(priority);
+  aTask.setBurst(burst);
+  aTask.setRemainBurst(burst);
+  aTask.setTQ(TQ);
+  
+  data.push_back(aTask);
+  orderedData.push_back(aTask);
+  initialSize = data.size();
+	
+}
 
-Task Priority::nextTask()
+//PURPOSE: get the next Task needed
+Task schedulers::nextTask()
 {
   Task highPriority;
+  highestPriority = 0;
+
   if(data.empty())
   {
     cout << "Error: No tasks." << endl;
@@ -37,13 +51,16 @@ Task Priority::nextTask()
   else
   {
     highPriority = data[0];
-    for(int i = 0; i < data.size(); i++)
+    for(int i = 1; i < (int)data.size(); i++)
     {
-      if(data[i].getPriority() > highPriority.getPriority())
+      //if has higher priority than current high then switch value of highest priority
+      if(data[i].getPriority() >= highPriority.getPriority())
       {
-        
-        highPriority = data[i];
-        highestPriority = i;
+        if(data[i].getPriority() > highPriority.getPriority())
+        {
+          highPriority = data[i];
+          highestPriority = i;
+        }
       }
     }
   }
@@ -51,12 +68,9 @@ Task Priority::nextTask()
   return highPriority;
 }
 
-/**
- *  * Run the FCFS scheduler
- *   */
-void Priority::schedule() 
+//PURPOSE: Run Priority scheduler
+void schedulers::schedule() 
 {
-  
   while(!data.empty())
   {
     CPU cpu1;
@@ -71,34 +85,37 @@ void Priority::schedule()
   
 }
 
-void Priority::calcWaitTime()
+//PURPOSE:calculate the wait time 
+void schedulers::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 1; i < (int)orderedData.size();i++)
   {
-    waitingTime = orderedData[i].getBurst() + orderedData[i-1].getBurst();
+    waitingTime = waitTime[i-1] + orderedData[i-1].getBurst();
     waitTime.push_back(waitingTime);
   }
   calcAvgWait();
 }
 
-double Priority::calcAvgWait()
+//PURPOSE: calculate the average wait time
+double schedulers::calcAvgWait()
 {
   double avgWaitTime = 0.0;
 
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 0; i < (int)orderedData.size();i++)
   {
     avgWaitTime += waitTime[i];
   }
   return avgWaitTime/initialSize;
 }
 
-int Priority::calcTurnTime()
+//PURPOSE: calculate turn time
+void schedulers::calcTurnTime()
 {
   int turnAroundTime = 0;
 
-  for(int i = 0; i < orderedData.size(); i++)
+  for(int i = 0; i < (int)orderedData.size(); i++)
   {
     if(i == 0)
     {
@@ -112,14 +129,14 @@ int Priority::calcTurnTime()
     }
   }
   calcAvgTurn();
-  return turnAroundTime;
 }
 
-double Priority::calcAvgTurn()
+//PURPOSE: calculate average turn time
+double schedulers::calcAvgTurn()
 {
   double avgTurnTime = 0.0;
 
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 0; i < (int)orderedData.size();i++)
   {
     avgTurnTime += turnTime[i];
     
@@ -127,9 +144,10 @@ double Priority::calcAvgTurn()
   return avgTurnTime/initialSize;
 }
 
-void Priority::displayStats()
+//PURPOSE: display the statistics nicely
+void schedulers::displayStats()
 {
-    for(int i = 0; i< orderedData.size();i++)
+    for(int i = 0; i < (int)orderedData.size();i++)
     {
       cout << orderedData[i].getName() << " turn-around time = ";
    

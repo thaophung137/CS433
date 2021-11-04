@@ -15,93 +15,75 @@
 
 #include "Task.h"
 #include "schedulers.h"
-#include "FCFS.h"
-#include "SJF.h"
-#include "Priority.h"
-#include "RoundRobin.h"
+#include "CPU.h"
 
 using namespace std; 
 
 #define SIZE 100
 
-void scheduleHandlers(string sche, char* c, int priority, int burst){
-
-}
-
 int main(int argc, char *argv[])
 {
-    cout << "CS 433 Programming assignment 3" << endl;
-    cout << "Author: Thao Phung and Sophia Nguyen" << endl;
-    cout << "Date: 10/21/2021 " << endl;
-    cout << "Course: CS433 (Operating Systems)" << endl;
-    cout << "Description : **** " << endl;
-    cout << "=================================" << endl;
+  cout << "CS 433 Programming assignment 3" << endl;
+  cout << "Author: Thao Phung and Sophia Nguyen" << endl;
+  cout << "Date: 10/21/2021 " << endl;
+  cout << "Course: CS433 (Operating Systems)" << endl;
+  cout << "Description : **** " << endl;
+  cout << "=================================" << endl;
 
-    int TQ = 10;
-    //Check that input file is provided at command line
-    if(argc < 2){
-        cerr << "Usage: " << argv[0] << " <input_file> [<time_quantum>]" << endl;
-        exit(1);
-    }
+  int TQ; //Time Quantum
+  CPU cpu1;
+  //Check that input file is provided at command line
+  if(argc < 2)
+  {
+    cerr << "Usage: " << argv[0] << " <input_file> [<time_quantum>]" << endl;
+    exit(1);
+  }
 
-    if(argc >= 3){
-        TQ = atoi(argv[2]);
-    }
-    string name;
-    int priority;
-    int burst;
+  if(argc >= 3)
+  {
+    TQ = atoi(argv[2]);
+  }
 
-    FCFS fcfs;
-    SJF sjf;
-    Priority p;
-    RoundRobin rr;
+  string name;
+  int priority;
+  int burst;
 
-    // open the input file
-    ifstream infile(argv[1]);
-    string line;
-    while(getline(infile, line) ) {
-        istringstream ss (line);
-        // Get the task name
-        getline(ss, name, ',');
+  schedulers s;
+
+  // open the input file
+  ifstream infile(argv[1]);
+  string line;
+  while(getline(infile, line) ) {
+    istringstream ss (line);
+    // Get the task name
+    getline(ss, name, ',');
         
-        // Get the task priority 
-        string token;
-        getline(ss, token, ',');
-        priority = stoi(token);
+    // Get the task priority 
+    string token;
+    getline(ss, token, ',');
+    priority = stoi(token);
 
-        // Get the task burst length 
-        getline(ss, token, ',');
-        burst = stoi(token);
+    // Get the task burst length 
+    getline(ss, token, ',');
+    burst = stoi(token);
         
-        char* c = strcpy(new char[name.length() + 1], name.c_str());
-        cout << c << " " << priority << " " << burst << endl;
-        fcfs.add(c, priority, burst);
-        // TODO: add the task to the scheduler's ready queue
-        // You will need a data structure, i.e. PCB, to represent a task 
+    char* c = strcpy(new char[name.length() + 1], name.c_str());
+    cout << c << " " << priority << " " << burst << endl;
+
+    if(argc==2)
+    {
+      s.add(c, priority, burst);
     }
 
-    fcfs.schedule();
-    //name = (char*)"T1";
-    //fcfs.add(name, 4, 20);
-    //sjf.add(name, 4, 22);
-    //p.add(name, 4, 22);
-    //rr.add(name, 4,22);
-    //name = (char*)"T2";
-    //fcfs.add(name, 5, 21);
-    //sjf.add(name, 5, 20);
-    //p.add(name, 5, 20);
-    //rr.add(name, 5, 20);
-    //name = (char*)"T3";
-    //fcfs.add(name, 6, 22);
-    //sjf.add(name, 6, 21);
-    //p.add(name, 6, 21);
-    //rr.add(name, 6, 21);
+    else if(argc >= 3)
+    {
+      s.add(c, priority, burst,TQ);
+    }
+  }
 
-    // invoke the scheduler
-    //fcfs.schedule();
-    //sjf.schedule();
-    //p.schedule();
-    //rr.schedule();
+  //invoke the scheduler
+  s.schedule();
 
-    return 0;
+  return 0;
+  
 }

@@ -4,18 +4,12 @@
 #include <iostream>
 #include <sys/time.h>
 
-#include "SJF.h"
+#include "schedulers.h"
 
 using namespace std;
 
-SJF::SJF() 
-{
-	shortestIndex = 0;
-  
-}
-
-// add a new task to the list of tasks
-void SJF::add(char *name, int priority, int burst) 
+// PURPOSE: add a new task to the list of tasks
+void schedulers::add(char *name, int priority, int burst) 
 {
   Task aTask;
   aTask.setName(name);
@@ -27,10 +21,27 @@ void SJF::add(char *name, int priority, int burst)
   initialSize = data.size();
 }
 
+// PURPOSE: add a new task to the list of tasks with time quantum
+void schedulers::add(char *name, int priority, int burst,int TQ) 
+{
+  Task aTask;
+  aTask.setName(name);
+  aTask.setPriority(priority);
+  aTask.setBurst(burst);
+  aTask.setRemainBurst(burst);
+  aTask.setTQ(TQ);
+  
+  data.push_back(aTask);
+  orderedData.push_back(aTask);
+  initialSize = data.size();
+	
+}
 
-Task SJF::nextTask()
+//PURPOSE: get the next task needed
+Task schedulers::nextTask()
 {
   Task shortestTask;
+  shortestIndex = 0;
   if(data.empty())
   {
     cout << "Error: No tasks." << endl;
@@ -38,13 +49,18 @@ Task SJF::nextTask()
   else
   {
     shortestTask = data[0];
-    for(int i = 0; i < data.size(); i++)
+    
+    for(int i = 1; i < (int)data.size(); i++)
     {
-      if(data[i].getBurst() < shortestTask.getBurst())
+      //if has higher burst than current high then switch value of highest burst
+      if(data[i].getBurst() <= shortestTask.getBurst())
       {
-        shortestTask = data[i];
-        shortestIndex = i;
-        
+        if(data[i].getBurst() < shortestTask.getBurst())
+        {
+          shortestTask = data[i];
+          shortestIndex = i;
+
+        }
       }
     }
   }
@@ -52,10 +68,8 @@ Task SJF::nextTask()
   return shortestTask;
 }
 
-/**
- *  * Run the FCFS scheduler
- *   */
-void SJF::schedule() 
+//PURPOSE: run the SJF scheduler
+void schedulers::schedule() 
 {
   while(!data.empty())
   {
@@ -70,35 +84,37 @@ void SJF::schedule()
   displayStats();
 }
 
-void SJF::calcWaitTime()
+//PURPOSE:calculate the wait time
+void schedulers::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 1; i < (int)orderedData.size();i++)
   {
-    waitingTime = orderedData[i].getBurst() + orderedData[i-1].getBurst();
+    waitingTime = waitTime[i-1] + orderedData[i-1].getBurst();
     waitTime.push_back(waitingTime);
-    
   }
   calcAvgWait();
 }
 
-double SJF::calcAvgWait()
+//PURPOSE: calculate the average wait time
+double schedulers::calcAvgWait()
 {
   double avgWaitTime = 0.0;
 
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 0; i < (int)orderedData.size();i++)
   {
     avgWaitTime += waitTime[i];
   }
   return avgWaitTime/initialSize;
 }
 
-int SJF::calcTurnTime()
+//PURPOSE: calculate the turn time
+void schedulers::calcTurnTime()
 {
   int turnAroundTime = 0;
   
-  for(int i = 0; i < orderedData.size(); i++)
+  for(int i = 0; i < (int)orderedData.size(); i++)
   {
     if(i == 0)
     {
@@ -112,14 +128,14 @@ int SJF::calcTurnTime()
   }
   
   calcAvgTurn();
-  return turnAroundTime;
 }
 
-double SJF::calcAvgTurn()
+//PURPOSE:calculate the average turn time
+double schedulers::calcAvgTurn()
 {
   double avgTurnTime = 0.0;
 
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 0; i < (int)orderedData.size();i++)
   {
     avgTurnTime += turnTime[i];
     
@@ -127,9 +143,10 @@ double SJF::calcAvgTurn()
   return avgTurnTime/initialSize;
 }
 
-void SJF::displayStats()
+//PURPOSE: display the statistics of the scheduling algorithm nicely
+void schedulers::displayStats()
 {
-    for(int i = 0; i < orderedData.size(); i++)
+    for(int i = 0; i < (int)orderedData.size(); i++)
     {
       cout << orderedData[i].getName() << " turn-around time = ";
    

@@ -4,17 +4,12 @@
 #include <iostream>
 #include <sys/time.h>
 
-#include "RoundRobin.h"
+#include "schedulers.h"
+#include "CPU.h"
 
 using namespace std;
 
-RoundRobin::RoundRobin() {
-  highestPriority = 0;
-  
-}
-
-// add a new task to the list of tasks
-void RoundRobin::add(char *name, int priority, int burst) 
+void schedulers::add(char *name, int priority, int burst) 
 {
   Task aTask;
   aTask.setName(name);
@@ -23,59 +18,72 @@ void RoundRobin::add(char *name, int priority, int burst)
   aTask.setRemainBurst(burst);
   
   data.push_back(aTask);
-  copyData.push_back(aTask);
+  orderedData.push_back(aTask);
   initialSize = data.size();
 	
 }
 
-Task RoundRobin::nextTask()
+// PURPOSE: add a new task to the list of tasks with time quantum
+void schedulers::add(char *name, int priority, int burst,int TQ) 
 {
-  if(copyData.empty())
+  Task aTask;
+  aTask.setName(name);
+  aTask.setPriority(priority);
+  aTask.setBurst(burst);
+  aTask.setRemainBurst(burst);
+  aTask.setTQ(TQ);
+  
+  data.push_back(aTask);
+  orderedData.push_back(aTask);
+  initialSize = data.size();
+	
+}
+
+//PURPOSE: get the next task
+Task schedulers::nextTask()
+{
+  if(orderedData.empty())
   {
     cout << "Error: No tasks." << endl;
   }
-  Task upNext = copyData[0];
+  Task upNext = orderedData[0];
   return upNext;
 }
 
-/**
- *  * Run the FCFS scheduler
- *   */
-void RoundRobin::schedule() 
+//PURPOSE: run the RoundRobin scheduler
+void schedulers::schedule() 
 {
   int RunTime = 0;
   int wait_time;
-  while(!copyData.empty())
+  while(!orderedData.empty())
   {
     CPU cpu1;
     Task task1 = nextTask();
-    if(task1.getRemainBurst() <= QUANTUM)
+    if(task1.getRemainBurst() <= task1.getTQ())
     {
       RunTime += task1.getRemainBurst();
 
-      cpu1.run(task1, task1.getRemainBurst());
+      cpu1.run2(task1, task1.getRemainBurst());
       task1.setRemainBurst(0);
 
       cout << "TurnAround time for " << task1.getName() << " is: " << RunTime << endl;
 
       turnTime.push_back(RunTime);
 
-      wait_time = RunTime - (copyData[0].getBurst());
+      wait_time = RunTime - (orderedData[0].getBurst());
       cout << "Wait time is: " << wait_time << endl;
       waitTime.push_back(wait_time);
 
-      copyData.erase(copyData.begin());
+      orderedData.erase(orderedData.begin());
     }
     else {
-      RunTime += QUANTUM;
-      cpu1.run(task1, QUANTUM);
-      task1.setRemainBurst(task1.getRemainBurst()-QUANTUM);
-      copyData.push_back(task1);
-      copyData.erase(copyData.begin());
+      RunTime += task1.getTQ();
+      cpu1.run2(task1, task1.getTQ());
+      task1.setRemainBurst(task1.getRemainBurst()-task1.getTQ());
+      orderedData.push_back(task1);
+      orderedData.erase(orderedData.begin());
     }
   } 
-  //calcTurnTime();
-  //calcWaitTime();
 
   displayStats();
 }
@@ -84,126 +92,32 @@ void runTurnTime(){
     
 }
 
-double RoundRobin::calcAvgTurn(){
+//PURPOSE: calculate the average turn time
+double schedulers::calcAvgTurn(){
   double totalTurnTime = 0;
 
-  for(int i = 0; i< turnTime.size(); i++){
+  for(int i = 0; i< (int)turnTime.size(); i++){
     totalTurnTime += turnTime[i];
   }
 
   return totalTurnTime/initialSize;
 }
 
-double RoundRobin::calcAvgWait()
+//PURPOSE: calculate the average wait time
+double schedulers::calcAvgWait()
 {
   double totalWaitTime = 0;
 
-  for(int i = 0; i < waitTime.size();i++)
+  for(int i = 0; i < (int)waitTime.size();i++)
   {
     totalWaitTime += waitTime[i];
   }
   return totalWaitTime/initialSize;
 }
 
-void RoundRobin::displayStats(){
+//PURPOSE: nicely display the statistics of the scheduling algorithm
+void schedulers::displayStats(){
     double att = calcAvgTurn();
     double awt = calcAvgWait();
     cout << "Average turn-around time = " << att << ", Average waiting time = " << awt << endl;
 }
-
-/*
-void RoundRobin::displayStats()
-{
-    for(int i = 0; i< copyData.size();i++)
-    {
-      cout << copyData[i].getName() << " turn-around time = ";
-      //cout << turnTime[i] << ", waiting time = " << waitTime[i] << endl;
-    }
-    
-    double att = calcAvgTurn();
-    double awt = calcAvgWait();
-    cout << "Average turn-around time = " << att << ", Average waiting time = " << awt << endl;
-
-}
-
-double RoundRobin::calcAvgTurn()
-{
-  double avgTurnTime = 0.0;
-
-  for(int i = 0; i < copyData.size();i++)
-  {
-    avgTurnTime += turnTime[i];
-    
-  }
-  return avgTurnTime;
-}
-
-double RoundRobin::calcAvgWait()
-{
-  double avgWaitTime = 0.0;
-
-  for(int i = 0; i < copyData.size();i++)
-  {
-    avgWaitTime += waitTime[i];
-  }
-  return avgWaitTime;
-}
-
-/*
-void RoundRobin::calcWaitTime()
-{
-  int waitingTime = 0;
-  waitTime.push_back(0);
-  for(int i = 0; i < copyData.size();i++)
-  {
-    waitingTime = copyData[i].getBurst() + copyData[i-1].getBurst();
-    waitTime.push_back(waitingTime);
-  }
-  calcAvgWait();
-}
-
-double RoundRobin::calcAvgWait()
-{
-  double avgWaitTime = 0.0;
-
-  for(int i = 0; i < copyData.size();i++)
-  {
-    avgWaitTime += waitTime[i];
-  }
-  return avgWaitTime/initialSize;
-}
-
-
-int RoundRobin::calcTurnTime()
-{
-  int turnAroundTime = 0;
-
-  for(int i = 0; i < copyData.size(); i++)
-  {
-    if(i == 0)
-    {
-      turnAroundTime = copyData[i].getBurst();
-      turnTime.push_back(copyData[i].getBurst());
-    }
-    else
-    {
-      turnAroundTime = turnTime[i-1] + copyData[i].getBurst();
-      turnTime.push_back(turnAroundTime);
-    }
-  }
-  calcAvgTurn();
-  return turnAroundTime;
-}
-
-double RoundRobin::calcAvgTurn()
-{
-  double avgTurnTime = 0.0;
-
-  for(int i = 0; i < copyData.size();i++)
-  {
-    avgTurnTime += turnTime[i];
-    
-  }
-  return avgTurnTime/initialSize;
-}
-*/
