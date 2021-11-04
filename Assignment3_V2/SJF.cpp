@@ -8,8 +8,6 @@
 
 using namespace std;
 
-
-
 // PURPOSE: add a new task to the list of tasks
 void schedulers::add(char *name, int priority, int burst) 
 {
@@ -21,6 +19,22 @@ void schedulers::add(char *name, int priority, int burst)
   data.push_back(aTask);
 
   initialSize = data.size();
+}
+
+// PURPOSE: add a new task to the list of tasks with time quantum
+void schedulers::add(char *name, int priority, int burst,int TQ) 
+{
+  Task aTask;
+  aTask.setName(name);
+  aTask.setPriority(priority);
+  aTask.setBurst(burst);
+  aTask.setRemainBurst(burst);
+  aTask.setTQ(TQ);
+  
+  data.push_back(aTask);
+  orderedData.push_back(aTask);
+  initialSize = data.size();
+	
 }
 
 //PURPOSE: get the next task needed
@@ -36,7 +50,7 @@ Task schedulers::nextTask()
   {
     shortestTask = data[0];
     
-    for(int i = 1; i < data.size(); i++)
+    for(int i = 1; i < (int)data.size(); i++)
     {
       //if has higher burst than current high then switch value of highest burst
       if(data[i].getBurst() <= shortestTask.getBurst())
@@ -75,7 +89,7 @@ void schedulers::calcWaitTime()
 {
   int waitingTime = 0;
   waitTime.push_back(0);
-  for(int i = 1; i < orderedData.size();i++)
+  for(int i = 1; i < (int)orderedData.size();i++)
   {
     waitingTime = waitTime[i-1] + orderedData[i-1].getBurst();
     waitTime.push_back(waitingTime);
@@ -88,7 +102,7 @@ double schedulers::calcAvgWait()
 {
   double avgWaitTime = 0.0;
 
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 0; i < (int)orderedData.size();i++)
   {
     avgWaitTime += waitTime[i];
   }
@@ -96,11 +110,11 @@ double schedulers::calcAvgWait()
 }
 
 //PURPOSE: calculate the turn time
-int schedulers::calcTurnTime()
+void schedulers::calcTurnTime()
 {
   int turnAroundTime = 0;
   
-  for(int i = 0; i < orderedData.size(); i++)
+  for(int i = 0; i < (int)orderedData.size(); i++)
   {
     if(i == 0)
     {
@@ -114,7 +128,6 @@ int schedulers::calcTurnTime()
   }
   
   calcAvgTurn();
-  return turnAroundTime;
 }
 
 //PURPOSE:calculate the average turn time
@@ -122,7 +135,7 @@ double schedulers::calcAvgTurn()
 {
   double avgTurnTime = 0.0;
 
-  for(int i = 0; i < orderedData.size();i++)
+  for(int i = 0; i < (int)orderedData.size();i++)
   {
     avgTurnTime += turnTime[i];
     
@@ -133,7 +146,7 @@ double schedulers::calcAvgTurn()
 //PURPOSE: display the statistics of the scheduling algorithm nicely
 void schedulers::displayStats()
 {
-    for(int i = 0; i < orderedData.size(); i++)
+    for(int i = 0; i < (int)orderedData.size(); i++)
     {
       cout << orderedData[i].getName() << " turn-around time = ";
    
