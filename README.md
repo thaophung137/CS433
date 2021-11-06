@@ -1,6 +1,6 @@
 # CS433
 
-Assignments for CS 433 Operating System at CSUSM Fall 2021
+Programming Assignments for CS 433 Operating System at CSUSM Fall 2021
 
 
 Assignment 1 - Priority Queue of Processes\
