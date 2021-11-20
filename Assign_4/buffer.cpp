@@ -1,28 +1,43 @@
 #include "buffer.h"
 
 
-buffer::buffer()
+Buffer::Buffer()
 {
-  buffer_item buffer[BUFFER_SIZE]; //the buffer
-  int count = 0;
+  count = 0;
+  bufferIndex = 0;
 }
 
-int buffer::insert_item(buffer_item item) 
+int Buffer::insert_item(buffer_item item) 
 { 
   /* insert item into buffer
   return 0 if successful, otherwise
   return -1 indicating an error condition */
+  
+  if(bufferIndex < BUFFER_SIZE){
+    buffer[bufferIndex] = item;
+    bufferIndex++;
+    return 0;
+  }
+  else{
+    return -1;
+  }
 }
 
-int buffer::remove_item(buffer_item *item) 
+int Buffer::remove_item(buffer_item *item) 
 { 
   /* remove an object from buffer
   placing it in item
   return 0 if successful, otherwise
   return -1 indicating an error condition */
+  *item = buffer[bufferIndex];
+  buffer[bufferIndex] = 0;
+  bufferIndex--;
+
+  return 0;
+
 }
 
-bool buffer::isEmpty()
+bool Buffer::isEmpty()
 {
   if(count == 0)
   {
@@ -31,7 +46,7 @@ bool buffer::isEmpty()
   return false;
 }
 
-bool buffer:: isFull()
+bool Buffer:: isFull()
 {
   if(count == BUFFER_SIZE)
   {

@@ -5,14 +5,16 @@ typedef int buffer_item;
 
 using namespace std;
 
-class buffer
+class Buffer
 {
   public:
-    buffer();
+    Buffer();
     int insert_item(buffer_item item);
-    int remove_item(*buffer_item item);
+    int remove_item(buffer_item *item);
     bool isFull();
     bool isEmpty();
   private:
     int count;
+    int bufferIndex;
+    buffer_item buffer[BUFFER_SIZE];
 };
