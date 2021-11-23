@@ -4,7 +4,6 @@
 Buffer::Buffer()
 {
   count = 0;
-  bufferIndex = 0;
 }
 
 int Buffer::insert_item(buffer_item item) 
@@ -13,9 +12,9 @@ int Buffer::insert_item(buffer_item item)
   return 0 if successful, otherwise
   return -1 indicating an error condition */
   
-  if(bufferIndex < BUFFER_SIZE){
-    buffer[bufferIndex] = item;
-    bufferIndex++;
+  if(count < BUFFER_SIZE){
+    buffer[count] = item;
+    count++;
     return 0;
   }
   else{
@@ -29,9 +28,9 @@ int Buffer::remove_item(buffer_item *item)
   placing it in item
   return 0 if successful, otherwise
   return -1 indicating an error condition */
-  *item = buffer[bufferIndex];
-  buffer[bufferIndex] = 0;
-  bufferIndex--;
+  *item = buffer[count];
+  buffer[count] = 0;
+  count--;
 
   return 0;
 
