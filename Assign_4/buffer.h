@@ -15,6 +15,5 @@ class Buffer
     bool isEmpty();
   private:
     int count;
-    int bufferIndex;
     buffer_item buffer[BUFFER_SIZE];
 };
