@@ -1,9 +1,28 @@
-#include "buffer.h"
+#include "Buffer.h"
 
 
 Buffer::Buffer()
 {
   count = 0;
+}
+
+void Buffer::displayBuffer()
+{
+  cout << "The current content of the buffer is [ ";
+  
+  if(isEmpty())
+  {
+    cout << "Buffer is empty!" << endl;
+  }
+
+  else
+  {
+    for(int i = 0; i < count; i++)
+    {
+      cout << " " << buffer[i];
+    }
+  }
+  cout << " ]" << endl;
 }
 
 int Buffer::insert_item(buffer_item item) 
