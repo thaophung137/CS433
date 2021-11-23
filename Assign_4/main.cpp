@@ -15,7 +15,7 @@ sem_t  empty, full;
 
 void *producer(void *param) 
 { 
-  buffer buff;
+  Buffer buff;
   buffer_item item;
   while (true) {
     /* sleep for a random period of time */ 
@@ -45,7 +45,7 @@ void *producer(void *param)
 
 void *consumer(void *param) 
 {
-  buffer buff;
+  Buffer buff;
   buffer_item item;
 	
   sem_wait(&full);
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     }
   /* 4. Create consumer thread(s) */
     for(int j = 0; j < pthread; j++){
-      pthread_create(&consumerThreads[i], consumer, NULL);
+      pthread_create(&consumerThreads[j], consumer, NULL);
     }
   /* 5. Sleep */
   sleep(sleeptime);
