@@ -23,7 +23,8 @@ void *producer(void *param)
     sleep(rand()%10);
     /* generate a random number */
     item = rand()%100;
-
+	  
+    sem_wait(&empty);
     pthread_mutex_lock(&lock);
 
     if(buff.insert_item(item))
@@ -37,6 +38,7 @@ void *producer(void *param)
     //end of critical section
 
     pthread_mutex_unlock(&lock);
+    sem_post(&full);
   }
 }
 
@@ -44,7 +46,8 @@ void *consumer(void *param)
 {
   buffer buff;
   buffer_item item;
-
+	
+  sem_wait(&full);
   pthread_mutex_lock(&lock);
   while (true) 
   {
@@ -62,6 +65,7 @@ void *consumer(void *param)
     //end of critical section
 
     pthread_mutex_unlock(&lock);
+    sem_post(&empty);
   }
 }
 
