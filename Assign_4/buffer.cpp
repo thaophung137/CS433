@@ -37,7 +37,6 @@ int Buffer::insert_item(buffer_item item)
     buffer[count] = item;
     count++;
     
-    displayBuffer();
 
     return 0;
   }
@@ -58,7 +57,6 @@ int Buffer::remove_item(buffer_item *item)
     out = (out+1)% BUFFER_SIZE;
     count--;
     
-     displayBuffer();
 
     return 0;
   }
