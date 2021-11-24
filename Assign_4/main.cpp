@@ -100,6 +100,8 @@ int main(int argc, char *argv[])
 
   /* 2. Initialize buffer */
   pthread_mutex_init(&lock, NULL);
+  sem_init(&empty, 0 , BUFFER_SIZE);
+  sem_init(&full, 0, 0);
   pthread_t producerThreads[pthread];
   pthread_t consumerThreads[cthread];
   
