@@ -29,7 +29,8 @@ int main(int argc, char *argv[])
   cout << "Course: CS433 (Operating Systems)" << endl;
   cout << "Description : **** " << endl;
   cout << "=================================" << endl;
-
+  cout<< "This program will accept three parameters: sleep time, number of producer threads, number of consumer threads. It will keep track and print out the content of the shared buffer during the execution of threads when an item is added or consumed." << endl;
+  
   int TQ; //Time Quantum
   CPU cpu1;
   //Check that input file is provided at command line

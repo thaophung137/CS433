@@ -17,6 +17,6 @@ class Buffer
     void displayBuffer();
   private:
     int count;
-    int bufferIndex;
+    int out;
     buffer_item buffer[BUFFER_SIZE];
 };
