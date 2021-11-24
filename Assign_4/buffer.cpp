@@ -36,6 +36,8 @@ int Buffer::insert_item(buffer_item item)
   if(!isFull()){
     buffer[count] = item;
     count++;
+    
+    displayBuffer();
 
     return 0;
   }
@@ -55,6 +57,8 @@ int Buffer::remove_item(buffer_item *item)
     *item = buffer[out];
     out = (out+1)% BUFFER_SIZE;
     count--;
+    
+     displayBuffer();
 
     return 0;
   }
