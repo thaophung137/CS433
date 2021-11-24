@@ -11,7 +11,7 @@
 using namespace std;
 
 pthread_mutex_t lock; //mutex lock
-sem_t  empty, full;
+sem_t empty,full;
 
 void *producer(void *param) 
 { 
