@@ -12,10 +12,10 @@ using namespace std;
 
 pthread_mutex_t lock; //mutex lock
 sem_t empty,full;
+Buffer buff;
 
 void *producer(void *param) 
 { 
-  Buffer buff;
   buffer_item item;
   while (true) {
     /* sleep for a random period of time */ 
@@ -27,7 +27,7 @@ void *producer(void *param)
     sem_wait(&empty);
     pthread_mutex_lock(&lock);
 
-    if(buff.insert_item(item))
+    if(buff.insert_item(item)==-1)
     {
       cout << "report error condition" << endl;
     }
@@ -45,17 +45,17 @@ void *producer(void *param)
 
 void *consumer(void *param) 
 {
-  Buffer buff;
   buffer_item item;
 	
-  sem_wait(&full);
-  pthread_mutex_lock(&lock);
   while (true) 
   {
     /* sleep for a random period of time */ 
     sleep(rand()%10);
     //sleep(...);
-    if(buff.remove_item(&item))
+    sem_wait(&full);
+    pthread_mutex_lock(&lock);
+
+    if(buff.remove_item(&item)==-1)
     {
       cout << "report error condition" << endl;
     }
