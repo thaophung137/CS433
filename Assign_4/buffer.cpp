@@ -1,11 +1,12 @@
 #include "buffer.h"
 
-
+//PURPOSE: default constructor for Buffer
 Buffer::Buffer()
 {
   count = 0;
 }
 
+//PURPOSE: display the buffer
 void Buffer::displayBuffer()
 {
   cout << "The current content of the buffer is [ ";
@@ -25,6 +26,7 @@ void Buffer::displayBuffer()
   cout << " ]" << endl;
 }
 
+//PURPOSE: insert item to the buffer
 int Buffer::insert_item(buffer_item item) 
 { 
   /* insert item into buffer
@@ -41,6 +43,7 @@ int Buffer::insert_item(buffer_item item)
   
 }
 
+//PURPOSE: remove item from the buffer
 int Buffer::remove_item(buffer_item *item) 
 { 
   /* remove an object from buffer
@@ -50,7 +53,7 @@ int Buffer::remove_item(buffer_item *item)
 
   if(!isEmpty())
   {
-    *item = buffer[0];
+    *item = buffer[count-1];
     count--;
 
     return 0;
@@ -60,6 +63,7 @@ int Buffer::remove_item(buffer_item *item)
 
 }
 
+//PURPOSE: check if buffer is empty
 bool Buffer::isEmpty()
 {
   if(count == 0)
@@ -69,6 +73,7 @@ bool Buffer::isEmpty()
   return false;
 }
 
+//PURPOSE: check if buffer is full
 bool Buffer::isFull()
 {
   if(count == BUFFER_SIZE)
