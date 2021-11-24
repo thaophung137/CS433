@@ -34,7 +34,7 @@ void *producer(void *param)
     else
     {
       cout << "producer produced " << item << endl; 
-      buff.displayBuffer();
+      //buff.displayBuffer();
     }
     //end of critical section
 
@@ -62,7 +62,7 @@ void *consumer(void *param)
     else
     {
       cout << "consumer consumed "<< item << endl;
-      buff.displayBuffer();
+      //buff.displayBuffer();
     }
     //end of critical section
 
