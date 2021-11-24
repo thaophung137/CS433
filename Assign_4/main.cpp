@@ -105,11 +105,11 @@ int main(int argc, char *argv[])
   
   /* 3. Create producer thread(s) */
     for(int i = 0; i < pthread; i++){
-      pthread_create(&producerThreads[i], producer, NULL);
+      pthread_create(&producerThreads[i], NULL, producer, NULL);
     }
   /* 4. Create consumer thread(s) */
     for(int j = 0; j < pthread; j++){
-      pthread_create(&consumerThreads[j], consumer, NULL);
+      pthread_create(&consumerThreads[j], NULL, consumer, NULL);
     }
   /* 5. Sleep */
   sleep(sleeptime);
