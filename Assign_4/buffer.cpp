@@ -31,14 +31,14 @@ int Buffer::insert_item(buffer_item item)
   return 0 if successful, otherwise
   return -1 indicating an error condition */
   
-  if(count < BUFFER_SIZE){
+  if(!isFull()){
     buffer[count] = item;
     count++;
+
     return 0;
   }
-  else{
     return -1;
-  }
+  
 }
 
 int Buffer::remove_item(buffer_item *item) 
@@ -47,11 +47,16 @@ int Buffer::remove_item(buffer_item *item)
   placing it in item
   return 0 if successful, otherwise
   return -1 indicating an error condition */
-  *item = buffer[count];
-  buffer[count] = 0;
-  count--;
 
-  return 0;
+  if(!isEmpty())
+  {
+    *item = buffer[0];
+    count--;
+
+    return 0;
+  }
+
+  return -1;
 
 }
 
@@ -64,7 +69,7 @@ bool Buffer::isEmpty()
   return false;
 }
 
-bool Buffer:: isFull()
+bool Buffer::isFull()
 {
   if(count == BUFFER_SIZE)
   {
