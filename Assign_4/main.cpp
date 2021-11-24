@@ -6,12 +6,17 @@
 #include <unistd.h>
 #include<iostream>
 
-#include "buffer.h"
+#include "Buffer.h"
 
 using namespace std;
 
 pthread_mutex_t lock; //mutex lock
 sem_t empty,full;
+
+pthread_t producerThreads;
+pthread_t consumerThreads;
+pthread_attr_t attr; 
+
 Buffer buff;
 
 void *producer(void *param) 
@@ -20,9 +25,8 @@ void *producer(void *param)
   while (true) {
     /* sleep for a random period of time */ 
     //sleep(...);
-    usleep(rand()%1000000);
-    /* generate a random number */
-    item = rand()%100;
+    
+     usleep(rand()%1000000);
 	  
     sem_wait(&empty);
     pthread_mutex_lock(&lock);
@@ -34,7 +38,7 @@ void *producer(void *param)
     else
     {
       cout << "producer produced " << item << endl; 
-      //buff.displayBuffer();
+      buff.displayBuffer();
     }
     //end of critical section
 
@@ -50,8 +54,8 @@ void *consumer(void *param)
   while (true) 
   {
     /* sleep for a random period of time */ 
-    usleep(rand()%1000000);
-    //sleep(...);
+     usleep(rand()%1000000);
+     
     sem_wait(&full);
     pthread_mutex_lock(&lock);
 
@@ -62,7 +66,7 @@ void *consumer(void *param)
     else
     {
       cout << "consumer consumed "<< item << endl;
-      //buff.displayBuffer();
+      buff.displayBuffer();
     }
     //end of critical section
 
@@ -74,15 +78,6 @@ void *consumer(void *param)
 
 int main(int argc, char *argv[]) 
 {
-  cout << "CS 433 Programming assignment 3" << endl;
-  cout << "Author: Thao Phung and Sophia Nguyen" << endl;
-  cout << "Date: 10/21/2021 " << endl;
-  cout << "Course: CS433 (Operating Systems)" << endl;
-  cout << "Description : **** " << endl;
-  cout << "=================================" << endl;
-  cout<< "This program will accept three parameters: sleep time, number of producer threads, number of consumer threads. It will keep track and print out the content of the shared buffer during the execution of threads when an item is added or consumed." << endl;
-
-
   if(argc < 4)
   {
     cout << "You have entered too few parameters to run the program.  You must enter three command-line arguments: " << endl;
@@ -111,16 +106,15 @@ int main(int argc, char *argv[])
   pthread_mutex_init(&lock, NULL);
   sem_init(&empty, 0 , BUFFER_SIZE);
   sem_init(&full, 0, 0);
-  pthread_t producerThreads[pthread];
-  pthread_t consumerThreads[cthread];
+  pthread_attr_init(&attr);
   
   /* 3. Create producer thread(s) */
     for(int i = 0; i < pthread; i++){
-      pthread_create(&producerThreads[i], NULL, producer, NULL);
+      pthread_create(&producerThreads, &attr, producer, NULL);
     }
   /* 4. Create consumer thread(s) */
-    for(int j = 0; j < pthread; j++){
-      pthread_create(&consumerThreads[j], NULL, consumer, NULL);
+    for(int j = 0; j < cthread; j++){
+      pthread_create(&consumerThreads, &attr, consumer, NULL);
     }
   /* 5. Sleep */
   sleep(sleeptime);
