@@ -24,7 +24,7 @@ void Buffer::displayBuffer()
       cout << " " << buffer[i];
     }
   }
-  cout << " ]" << "Count = " << count << "----Out = " << out << endl;
+  cout << " ]" << endl;
 }
 
 int Buffer::insert_item(buffer_item item) 

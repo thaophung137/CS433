@@ -78,6 +78,14 @@ void *consumer(void *param)
 
 int main(int argc, char *argv[]) 
 {
+  cout << "CS 433 Programming assignment 3" << endl;
+  cout << "Author: Thao Phung and Sophia Nguyen" << endl;
+  cout << "Date: 10/21/2021 " << endl;
+  cout << "Course: CS433 (Operating Systems)" << endl;
+  cout << "Description : **** " << endl;
+  cout << "=================================" << endl;
+  cout<< "This program will accept three parameters: sleep time, number of producer threads, number of consumer threads. It will keep track and print out the content of the shared buffer during the execution of threads when an item is added or consumed." << endl;
+  
   if(argc < 4)
   {
     cout << "You have entered too few parameters to run the program.  You must enter three command-line arguments: " << endl;
