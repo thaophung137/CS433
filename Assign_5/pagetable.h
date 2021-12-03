@@ -1,5 +1,5 @@
 #pragma once
-
+#include <vector>
 // Remember to add comments to your code
 
 // A page table entry
@@ -9,9 +9,15 @@ public:
 	// Physical frame number for a given page
 	int frame_num;
 	// valid bit represents whether a page is in the physical memory
-	bool valid = false;
+	bool valid;
 	// dirty bit represents whether a page is changed
-	bool dirty = false;
+	bool dirty;
+	//Default Constructor
+	PageEntry(){
+		frame_num = 0;
+		valid = false;
+		dirty = false; 
+	}
 };
 
 
@@ -21,4 +27,21 @@ public:
 class PageTable
 {
 	// TODO: Add your implementation of the page table here
+	std::vector<PageEntry> page_table; 
+	int totalReferences;
+	int totalPageFaults;
+	int totalReplacements;
+	int pageNumber;
+	int frameNumber; 
+
+
+	PageTable();
+	~PageTable(); 
+
+	void display();
+	void insert(int size);
+
+	void random();
+	void FIFO();
+	void LRU();
 };

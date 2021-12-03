@@ -5,6 +5,9 @@
 #include <cstdlib>
 #include <cmath>
 #include <vector>
+#include "pagetable.h"
+
+using namespace std;
 
 // Check if an integer is power of 2
 bool isPowerOfTwo(unsigned int x)
@@ -15,20 +18,20 @@ bool isPowerOfTwo(unsigned int x)
 
 int main(int argc, char* argv[]) {
 	//Print basic information about the program
-	std::cout << "=================================================================" << std::endl;
-	std::cout << "CS 433 Programming assignment 5" << std::endl;
-	std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
-	std::cout << "Date: xx/xx/20xx" << std::endl;
-	std::cout << "Course: CS433 (Operating Systems)" << std::endl;
-	std::cout << "Description : Program to simulate different page replacement algorithms" << std::endl;
-	std::cout << "=================================================================\n" << std::endl;
+	cout << "=================================================================" << endl;
+	cout << "CS 433 Programming assignment 5" << endl;
+	cout << "Author: Thao Phung & Sophia Nguyen" << endl;
+	cout << "Date: 12/2/2021" << endl;
+	cout << "Course: CS433 (Operating Systems)" << endl;
+	cout << "Description : Program to simulate different page replacement algorithms" << endl;
+	cout << "=================================================================\n" << endl;
 
 	if (argc < 3) {
 		// user does not enter enough parameters
-		std::cout << "You have entered too few parameters to run the program.  You must enter" << std::endl
-			<< "two command-line arguments:" << std::endl
-			<< " - page size (in bytes): between 256 and 8192, inclusive" << std::endl
-			<< " - physical memory size (in megabytes): between 4 and 64, inclusive" << std::endl;
+		cout << "You have entered too few parameters to run the program.  You must enter" << endl
+			<< "two command-line arguments:" << endl
+			<< " - page size (in bytes): between 256 and 8192, inclusive" << endl
+			<< " - physical memory size (in megabytes): between 4 and 64, inclusive" << endl;
 		exit(1);
 	}
 	
@@ -37,15 +40,15 @@ int main(int argc, char* argv[]) {
 	unsigned int page_size = atoi(argv[1]);
 	if(!isPowerOfTwo(page_size))
 	{
-		std::cout << "You have entered an invalid parameter for page size (bytes)" << std::endl
-			<< "  (must be an power of 2 between 256 and 8192, inclusive)." << std::endl;
+		cout << "You have entered an invalid parameter for page size (bytes)" << endl
+			<< "  (must be an power of 2 between 256 and 8192, inclusive)." << endl;
 		return 1;
 	}
 	unsigned int phys_mem_size = atoi(argv[2]) << 20; // convert from MB to bytes
 	if(!isPowerOfTwo(phys_mem_size))
 	{
-		std::cout << "You have entered an invalid parameter for physical memory size (MB)" << std::endl
-			<< "  (must be an even integer between 4 and 64, inclusive)." << std::endl;
+		cout << "You have entered an invalid parameter for physical memory size (MB)" << endl
+			<< "  (must be an even integer between 4 and 64, inclusive)." << endl;
 		return 1;
 	}
 
@@ -58,27 +61,34 @@ int main(int argc, char* argv[]) {
 	// Number of free frames in physical memory = 2^(phys_mem_bits - page_offset_bits)
 	int num_frames = 1 << (phys_mem_bits - page_offset_bits);
 	
-	std::cout << "Page size = " << page_size << " bytes" << std::endl;
-	std::cout << "Physical Memory size = " << phys_mem_size << " bytes" << std::endl;
-	std::cout << "Number of pages = " << num_pages << std::endl; 
-	std::cout << "Number of physical frames = " << num_frames << std::endl;
-
+	cout << "Page size = " << page_size << " bytes" << endl;
+	cout << "Physical Memory size = " << phys_mem_size << " bytes" << endl;
+	cout << "Number of pages = " << num_pages << endl; 
+	cout << "Number of physical frames = " << num_frames << endl;
 	// Test 1: Read and simulate the small list of logical addresses from the input file "small_refs.txt"
-	std::cout <<"\n================================Test 1==================================================\n";
+	cout <<"\n================================Test 1==================================================\n";
 	// TODO: Add your code here for test 1 that prints out logical page #, frame # and whether page fault for each logical address
-	
-	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
-	std::cout <<"\n================================Test 2==================================================\n";
 
-	std::cout << "****************Simulate FIFO replacement****************************" << std::endl;
+	fstream fin("small_refs.txt");
+	int line;
+
+	while(fin >> line){
+		
+	}
+
+
+	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
+	cout <<"\n================================Test 2==================================================\n";
+
+	cout << "****************Simulate FIFO replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
 	// TODO: print the statistics and run-time
 
-	std::cout << "****************Simulate Random replacement****************************" << std::endl;
+	cout << "****************Simulate Random replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using Random replacement algorithm
 	// TODO: print the statistics and run-time
 
-	std::cout << "****************Simulate LRU replacement****************************" << std::endl;
+	cout << "****************Simulate LRU replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using LRU replacement algorithm
 	// TODO: print the statistics and run-time
 
