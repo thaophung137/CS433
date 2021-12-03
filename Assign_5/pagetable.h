@@ -1,5 +1,9 @@
 #pragma once
 #include <vector>
+#include<iostream>
+
+
+using namespace std;
 // Remember to add comments to your code
 
 // A page table entry
@@ -27,12 +31,13 @@ public:
 class PageTable
 {
 	// TODO: Add your implementation of the page table here
-	std::vector<PageEntry> page_table; 
+	vector<PageEntry> page_table; 
 	int totalReferences;
 	int totalPageFaults;
 	int totalReplacements;
 	int pageNumber;
 	int frameNumber; 
+  double timeElapsed;
 
 
 	PageTable();
@@ -41,7 +46,7 @@ class PageTable
 	void display();
 	void insert(int size);
 
-	void random();
-	void FIFO();
-	void LRU();
+	void random(PageEntry &page);
+	void FIFO(PageEntry &page);
+	void LRU(PageEntry &page);
 };
