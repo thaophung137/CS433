@@ -92,16 +92,6 @@ int main(int argc, char* argv[]) {
 		int last = value % 10;
 		bool dirtyBit;
 
-		// check the last digit of line
-		if (last % 2 == 0)
-    {
-			dirtyBit = false;
-    }
-		else 
-    {
-			dirtyBit = true; 
-    }
-
 		// find value in page_table
 		int index = table.find(value); 
 
@@ -113,7 +103,7 @@ int main(int argc, char* argv[]) {
 		}
     else //needs new table entry
     {
-      PageEntry temp(value, true, dirtyBit, table.lineNum);
+      PageEntry temp(value, true, table.lineNum);
 			table.totalPageFaults++;
     }
 	}
