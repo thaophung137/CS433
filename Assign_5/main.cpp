@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <cmath>
+#include <string>
 #include <vector>
 #include "pagetable.h"
 
@@ -72,24 +73,67 @@ int main(int argc, char* argv[]) {
 	fstream fin("small_refs.txt");
 	int line;
 
-	while(fin >> line){
-		
-	}
+	while(fin >> line)
+  {
+
+  }
 
 
 	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
 	cout <<"\n================================Test 2==================================================\n";
 
+  PageTable table;
+	fstream fin2("large_refs.txt");
+	int line2;
+
+	while(fin2 >> line2)
+  {
+		int value = stoi(line2);
+		int last = value % 10;
+		bool dirtyBit;
+
+		// check the last digit of line
+		if (last % 2 == 0)
+    {
+			dirtyBit = false;
+    }
+		else 
+    {
+			dirtyBit = true; 
+    }
+
+		// find value in page_table
+		int index = table.find(value); 
+
+		// exists in the page_table
+		if (index >= 0) 
+    {
+			table.page_table[index].dirty = dirtyBit;
+			table.page_table[index].last = table.lineNum;
+		}
+    else //needs new table entry
+    {
+      PageEntry temp(value, true, dirtyBit, table.lineNum);
+			table.totalPageFaults++;
+    }
+	}
+
 	cout << "****************Simulate FIFO replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
 	// TODO: print the statistics and run-time
+  table.FIFO(temp);
+  table.display();
 
 	cout << "****************Simulate Random replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using Random replacement algorithm
 	// TODO: print the statistics and run-time
+  table.random(temp);
+  table.display();
 
 	cout << "****************Simulate LRU replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using LRU replacement algorithm
 	// TODO: print the statistics and run-time
+  table.LRU(temp);
+  table.display();
 
 }
