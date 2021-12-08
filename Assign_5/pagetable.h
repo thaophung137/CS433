@@ -25,11 +25,11 @@ public:
 		dirty = false; 
 	}
   
-  PageEntry(int valueP, bool validP, bool dirtyP int lastP) {
+  PageEntry(int valueP, bool validP, int lastP) 
+  {
 		value = valueP;
-		valid = validV;
-    dirty = dirtyP;
-		last = lastV;
+		valid = validP;
+		last = lastP;
 	}
 };
 
