@@ -71,20 +71,28 @@ int main(int argc, char* argv[]) {
 	// TODO: Add your code here for test 1 that prints out logical page #, frame # and whether page fault for each logical address
 
 	fstream fin("small_refs.txt");
-	int line;
+	string line;
+	PageTable part1;
 
 	while(fin >> line)
   {
+	int val = stoi(line);
+	int pageNum = val/page_size;
+	int idx = part1.find(pageNum);
 
+	part1.insert(val, pageNum, idx); 
   }
+  cout << "Total Page Fault: " << part1.totalPageFaults << endl;
 
 
 	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
 	cout <<"\n================================Test 2==================================================\n";
 
+/*
   PageTable table;
 	fstream fin2("large_refs.txt");
-	int line2;
+	string line2;
+
 
 	while(fin2 >> line2)
   {
@@ -125,5 +133,5 @@ int main(int argc, char* argv[]) {
 	// TODO: print the statistics and run-time
   table.LRU(temp);
   table.display();
-
+*/
 }
