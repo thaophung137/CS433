@@ -9,7 +9,6 @@ PageTable::PageTable(){
     totalPageFaults = 0;
     totalReplacements = 0;
     timeElapsed = 0.00;
-    frameNumber = 0;
 
 } 
 PageTable::~PageTable(){
@@ -21,6 +20,18 @@ void PageTable::display(){
 	cout << "Total page faults: " << totalPageFaults << endl;
 	cout << "Total replacements: " << totalReplacements << endl;
   cout << "Total time elapsed: " << timeElapsed << endl;
+}
+
+void PageTable::insert(int size)
+{
+  for (int i = 0; i < size; i++) {
+		PageEntry page;
+		page.dirty = false;
+		page.valid = false;
+    page.value = 0;
+
+		page_table.push_back(page);
+	}
 }
 
 void PageTable::random(PageEntry &page)
@@ -38,28 +49,6 @@ void PageTable::FIFO(PageEntry &page)
 
 	page_table[replace] = page; 
 
-}
-
-void PageTable::LRU(PageEntry &page){
-  int replace;
-
-  if(page_table[lineCount].valid == false){
-    replace = lineCount;
-    lineCount++;
-  }
-  else{
-    int index = lineCount;
-    int min = currLine; 
-
-    for(int i = 0; i < page_table.size(); i++){
-      if(page_table[i].last < min){
-        index = i;
-        min = page_table[i].last;
-      }
-      replace = index;
-    }
-    page_table[replace] = page;
-  }
 }
 
 int PageTable::find(int lookFor)

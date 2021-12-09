@@ -16,11 +16,8 @@ public:
 	bool valid;
 	// dirty bit represents whether a page is changed
 	bool dirty;
-	bool pageFault;
-  	int value;
-  	int last;
-	int pageNum;
-	
+  int value;
+  int last;
 	//Default Constructor
 	PageEntry(){
 		frame_num = 0;
@@ -49,9 +46,8 @@ class PageTable
 	int totalReplacements;
 	int pageNumber;
 	int frameNumber; 
-  	double timeElapsed;
-  	int lineCount;
-	int currLine;
+  double timeElapsed;
+  int lineCount;
   
 
   public: 
@@ -64,7 +60,7 @@ class PageTable
 	~PageTable(); 
 
 	void display();
-	void insert(int value, int pageNum, int index);
+	void insert(int size);
   int find(int);
 
 	void random(PageEntry &page);
