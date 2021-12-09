@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "pagetable.h"
+#include <sys/time.h>
 
 using namespace std;
 
@@ -113,8 +114,28 @@ int main(int argc, char* argv[]) {
     {
       PageEntry temp(value, true, table.lineNum);
 			table.totalPageFaults++;
+
+      cout << "****************Simulate FIFO replacement****************************" << endl;
+	    // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
+	    // TODO: print the statistics and run-time
+      table.FIFO(temp);
+      table.display();
+
+	    cout << "****************Simulate Random replacement****************************" << endl;
+	    // TODO: Add your code to calculate number of page faults using Random replacement algorithm
+	    // TODO: print the statistics and run-time
+      table.random(temp);
+      table.display();
+
+	    cout << "****************Simulate LRU replacement****************************" << endl;
+	    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
+	    // TODO: print the statistics and run-time
+      //table.LRU(temp);
+      //table.display();
     }
-	}
+    gettimeofday(&tim, NULL);  
+    double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+    printf("%.6lf seconds elapsed\n", endTime-startTime); 
 
 	cout << "****************Simulate FIFO replacement****************************" << endl;
 	// TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
