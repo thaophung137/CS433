@@ -58,8 +58,6 @@ class PageTable
   vector<PageEntry> page_table; 
   int lineNum;
   int totalPageFaults;
-  int pageSize;
-  int memSize;
 
   
 	PageTable();
