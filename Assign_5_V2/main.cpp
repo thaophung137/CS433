@@ -106,8 +106,6 @@ int main(int argc, char* argv[]) {
 	while(fin2 >> line2)
   {
 		int value = stoi(line2);
-		int last = value % 10;
-		bool dirtyBit;
 
     table.totalReferences++;
 
