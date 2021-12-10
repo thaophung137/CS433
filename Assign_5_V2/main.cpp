@@ -109,42 +109,51 @@ int main(int argc, char* argv[]) {
 		int last = value % 10;
 		bool dirtyBit;
 
+    table.totalReferences++;
+
 		// find value in page_table
 		int index = table.find(value); 
 
 		// exists in the page_table
 		if (index >= 0) 
     {
-			table.page_table[index].dirty = dirtyBit;
-			table.page_table[index].last = table.lineNum;
+      table.page_table[index].last = table.lineNum;
+			table.page_table[index].dirty = false;
 		}
     else //needs new table entry
     {
-      PageEntry temp(value, true, table.lineNum);
+      PageEntry temp(value, true, true, table.lineNum);
 			table.totalPageFaults++;
 
       cout << "****************Simulate FIFO replacement****************************" << endl;
 	    // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
 	    // TODO: print the statistics and run-time
       table.FIFO(temp);
+      gettimeofday(&tim, NULL);  
+      double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+      table.timeElapsed = endTime-startTime; 
       table.display();
 
 	    cout << "****************Simulate Random replacement****************************" << endl;
 	    // TODO: Add your code to calculate number of page faults using Random replacement algorithm
 	    // TODO: print the statistics and run-time
       table.random(temp);
+      gettimeofday(&tim, NULL);  
+      endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+      table.timeElapsed = endTime-startTime; 
       table.display();
 
 	    cout << "****************Simulate LRU replacement****************************" << endl;
 	    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
 	    // TODO: print the statistics and run-time
-      //table.LRU(temp);
-      //table.display();
+      /*table.LRU(temp);
+      gettimeofday(&tim, NULL);  
+      double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+      table.timeElapsed = endTime-startTime; 
+      table.display();*/
+      
     }
-    gettimeofday(&tim, NULL);  
-    double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
-    printf("%.6lf seconds elapsed\n", endTime-startTime); 
-
+    
 	}
 
 }
