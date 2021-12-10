@@ -25,10 +25,11 @@ public:
 		dirty = false; 
 	}
   
-  PageEntry(int valueP, bool validP, int lastP) 
+  PageEntry(int valueP, bool validP, bool dirtyP, int lastP) 
   {
 		value = valueP;
 		valid = validP;
+    dirty = dirtyP;
 		last = lastP;
 	}
 };
@@ -41,12 +42,11 @@ class PageTable
 {
   private:
 	// TODO: Add your implementation of the page table here
-	int totalReferences;
 	
 	int totalReplacements;
 	int pageNumber;
 	int frameNumber; 
-  double timeElapsed;
+  
   int lineCount;
   
 
@@ -56,6 +56,8 @@ class PageTable
   int totalPageFaults;
   int pageSize;
   int memSize;
+  double timeElapsed;
+  int totalReferences;
 
   
 	PageTable();
