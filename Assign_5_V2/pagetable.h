@@ -44,11 +44,10 @@ class PageTable
 {
   private:
 	// TODO: Add your implementation of the page table here
-	int totalReferences;
 	int pageNumber;
 	int frameNumber; 
-  	double timeElapsed;
-  	int lineCount;
+	double timeElapsed;
+	int lineCount;
 	int currLine;
   
 
@@ -56,26 +55,12 @@ class PageTable
   	vector<PageEntry> page_table; 
   	int lineNum;
   	int totalPageFaults;
-	int totalReplacements;
+	  int totalReplacements;
+     int totalReferences;
   	int pageSize;
   	int memSize;
-	
-	int totalReplacements;
-	int pageNumber;
-	int frameNumber; 
+	  double timeElapsed;
   
-  int lineCount;
-  
-
-  public: 
-  vector<PageEntry> page_table; 
-  int lineNum;
-  int totalPageFaults;
-  int pageSize;
-  int memSize;
-  double timeElapsed;
-  int totalReferences;
-
   
 	PageTable();
 	~PageTable(); 
