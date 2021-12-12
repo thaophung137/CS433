@@ -51,14 +51,36 @@ void PageTable::FIFO(PageEntry &page)
 
 }
 
+void PageTable::LRU(PageEntry &page){
+  int replace;
+
+  if(page_table[lineCount].valid == false){
+    replace = lineCount;
+    lineCount++;
+  }
+  else{
+    int index = lineCount;
+    int min = currLine; 
+
+    for(unsigned int i = 0; i < page_table.size(); i++){
+      if(page_table[i].last < min){
+        index = i;
+        min = page_table[i].last;
+      }
+      replace = index;
+    }
+    page_table[replace] = page;
+  }
+}
+
 int PageTable::find(int lookFor)
 {
-  for(int i = 0; i < page_table.size(); i++)
+  for(unsigned int i = 0; i < page_table.size(); i++)
   {
     if(page_table[i].value == lookFor)
     {
       return i;
     }
-    return -1;
   }
+  return -1;
 }

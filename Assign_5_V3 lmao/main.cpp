@@ -7,9 +7,11 @@
 #include <string>
 #include <vector>
 #include "pagetable.h"
+#include <sys/time.h>
 
 using namespace std;
 
+#define Size 100
 // Check if an integer is power of 2
 bool isPowerOfTwo(unsigned int x)
 {
@@ -71,26 +73,69 @@ int main(int argc, char* argv[]) {
 	// TODO: Add your code here for test 1 that prints out logical page #, frame # and whether page fault for each logical address
 
 	fstream fin("small_refs.txt");
-	int line;
+	string line;
+	PageTable part1;
+
+	int count = 0;
+	int fNum = 0; 
+	part1.insert(Size); 
 
 	while(fin >> line)
-  {
+	{
+		int val = stoi(line);
+		int pageNum = val/page_size;
+		int idx = part1.find(pageNum);
 
-  }
+		count++;
+		if(idx >= 0){
+			part1.page_table[count].value = pageNum; 
+			part1.page_table[count].fault = false; 
+			fNum = part1.page_table[idx].frame_num;
+		}
+		else{
+			part1.page_table[count].value = pageNum; 
+			part1.page_table[count].frame_num = fNum; 
+			part1.totalPageFaults++;
+		}
+		 cout << "Logical address: " << val << ",        page number: " 
+		 << pageNum << ",        frame number: " << fNum << ",        is page fault? " << part1.page_table[count].fault 
+		 << endl;
+		fNum++;
+	}
+	cout << "Total Page Fault: " << part1.totalPageFaults << endl;
+	cout << "Total Replacements: " << part1.totalReplacements << endl;
+	
+
 
 
 	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
 	cout <<"\n================================Test 2==================================================\n";
 
-  PageTable table;
-	fstream fin2("large_refs.txt");
-	int line2;
+PageTable table;
+fstream fin2("large_refs.txt");
+string line2;
+//int random;
+
+table.pageSize = atoi(argv[1]); 
+table.memSize = atoi(argv[2]); 
+
+  // make page table;
+int tableSize = table.memSize / table.pageSize;
+table.insert(tableSize);
+
+  struct timeval tim; 
+  gettimeofday(&tim, NULL);  
+  double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
+
+  //initialize random seed
+  srand(time(NULL));
+
 
 	while(fin2 >> line2)
   {
 		int value = stoi(line2);
-		int last = value % 10;
-		bool dirtyBit;
+
+    table.totalReferences++;
 
 		// find value in page_table
 		int index = table.find(value); 
@@ -98,32 +143,44 @@ int main(int argc, char* argv[]) {
 		// exists in the page_table
 		if (index >= 0) 
     {
-			table.page_table[index].dirty = dirtyBit;
-			table.page_table[index].last = table.lineNum;
+      table.page_table[index].last = table.lineNum;
+			table.page_table[index].dirty = false;
 		}
     else //needs new table entry
     {
-      PageEntry temp(value, true, table.lineNum);
+      PageEntry temp(value, true, true, table.lineNum);
 			table.totalPageFaults++;
+
+      cout << "****************Simulate FIFO replacement****************************" << endl;
+	    // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
+	    // TODO: print the statistics and run-time
+      table.FIFO(temp);
+      gettimeofday(&tim, NULL);  
+      double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+      table.timeElapsed = endTime-startTime; 
+      table.display();
+
+	    cout << "****************Simulate Random replacement****************************" << endl;
+	    // TODO: Add your code to calculate number of page faults using Random replacement algorithm
+	    // TODO: print the statistics and run-time
+      table.random(temp);
+      gettimeofday(&tim, NULL);  
+      endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+      table.timeElapsed = endTime-startTime; 
+      table.display();
+
+	    cout << "****************Simulate LRU replacement****************************" << endl;
+	    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
+	    // TODO: print the statistics and run-time
+      table.LRU(temp);
+      table.display();
+      gettimeofday(&tim, NULL);  
+      endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+      table.timeElapsed = endTime-startTime; 
+      table.display();
+      
     }
+    
 	}
-
-	cout << "****************Simulate FIFO replacement****************************" << endl;
-	// TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
-	// TODO: print the statistics and run-time
-  table.FIFO(temp);
-  table.display();
-
-	cout << "****************Simulate Random replacement****************************" << endl;
-	// TODO: Add your code to calculate number of page faults using Random replacement algorithm
-	// TODO: print the statistics and run-time
-  table.random(temp);
-  table.display();
-
-	cout << "****************Simulate LRU replacement****************************" << endl;
-	// TODO: Add your code to calculate number of page faults using LRU replacement algorithm
-	// TODO: print the statistics and run-time
-  table.LRU(temp);
-  table.display();
-
 }
+

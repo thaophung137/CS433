@@ -55,7 +55,7 @@ class PageTable
   	vector<PageEntry> page_table; 
   	int lineNum;
   	int totalPageFaults;
-	  int totalReplacements;
+	int totalReplacements;
      int totalReferences;
   	int pageSize;
   	int memSize;

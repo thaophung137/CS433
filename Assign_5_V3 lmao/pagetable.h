@@ -16,19 +16,22 @@ public:
 	bool valid;
 	// dirty bit represents whether a page is changed
 	bool dirty;
-  int value;
-  int last;
+	bool fault; 
+  	int value;
+  	int last;
 	//Default Constructor
 	PageEntry(){
 		frame_num = 0;
 		valid = false;
 		dirty = false; 
+		fault = true; 
 	}
   
-  PageEntry(int valueP, bool validP, int lastP) 
+  PageEntry(int valueP, bool validP, bool dirtyP, int lastP) 
   {
 		value = valueP;
 		valid = validP;
+    dirty = dirtyP;
 		last = lastP;
 	}
 };
@@ -41,27 +44,30 @@ class PageTable
 {
   private:
 	// TODO: Add your implementation of the page table here
-	int totalReferences;
-	
-	int totalReplacements;
 	int pageNumber;
 	int frameNumber; 
-  double timeElapsed;
-  int lineCount;
+	int lineCount;
+	int currLine;
   
 
   public: 
-  vector<PageEntry> page_table; 
-  int lineNum;
-  int totalPageFaults;
-
+  	vector<PageEntry> page_table; 
+  	int lineNum;
+  	int totalPageFaults;
+	  int totalReplacements;
+     int totalReferences;
+  	int pageSize;
+  	int memSize;
+	  double timeElapsed;
+  
   
 	PageTable();
 	~PageTable(); 
 
 	void display();
 	void insert(int size);
-  int find(int);
+  	int find(int);
+	int getFrame(int get);
 
 	void random(PageEntry &page);
 	void FIFO(PageEntry &page);
