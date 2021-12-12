@@ -11,6 +11,7 @@
 
 using namespace std;
 
+#define Size 100
 // Check if an integer is power of 2
 bool isPowerOfTwo(unsigned int x)
 {
@@ -71,29 +72,56 @@ int main(int argc, char* argv[]) {
 	cout <<"\n================================Test 1==================================================\n";
 	// TODO: Add your code here for test 1 that prints out logical page #, frame # and whether page fault for each logical address
 
-	/*fstream fin("small_refs.txt");
-	int line;
+	fstream fin("small_refs.txt");
+	string line;
+	PageTable part1;
+
+	int count = 0;
+	int fNum = 0; 
+	part1.insert(Size); 
 
 	while(fin >> line)
-  {
+	{
+		int val = stoi(line);
+		int pageNum = val/page_size;
+		int idx = part1.find(pageNum);
 
-  }*/
+		count++;
+		if(idx >= 0){
+			part1.page_table[count].value = pageNum; 
+			part1.page_table[count].fault = false; 
+			fNum = part1.page_table[idx].frame_num;
+		}
+		else{
+			part1.page_table[count].value = pageNum; 
+			part1.page_table[count].frame_num = fNum; 
+			part1.totalPageFaults++;
+		}
+		 cout << "Logical address: " << val << ",        page number: " 
+		 << pageNum << ",        frame number: " << fNum << ",        is page fault? " << part1.page_table[count].fault 
+		 << "	idx: " << idx << endl;
+		fNum++;
+	}
+	cout << "Total Page Fault: " << part1.totalPageFaults << endl;
+	cout << "Total Replacements: " << part1.totalReplacements << endl;
+	
 
 
+/*
 	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
 	cout <<"\n================================Test 2==================================================\n";
 
-  PageTable table;
-	fstream fin2("large_refs.txt");
-	string line2;
-  int random;
+PageTable table;
+fstream fin2("large_refs.txt");
+string line2;
+int random;
 
-  table.pageSize = atoi(argv[1]); 
-	table.memSize = atoi(argv[2]); 
+table.pageSize = atoi(argv[1]); 
+table.memSize = atoi(argv[2]); 
 
   // make page table;
-	int tableSize = table.memSize / table.pageSize;
-	table.insert(tableSize);
+int tableSize = table.memSize / table.pageSize;
+table.insert(tableSize);
 
   struct timeval tim; 
   gettimeofday(&tim, NULL);  
@@ -138,13 +166,13 @@ int main(int argc, char* argv[]) {
 	    cout << "****************Simulate LRU replacement****************************" << endl;
 	    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
 	    // TODO: print the statistics and run-time
-      //table.LRU(temp);
-      //table.display();
+      table.LRU(temp);
+      table.display();
     }
     gettimeofday(&tim, NULL);  
     double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
     printf("%.6lf seconds elapsed\n", endTime-startTime); 
 
 	}
-
+*/
 }
