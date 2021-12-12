@@ -27,10 +27,11 @@ public:
 		fault = true; 
 	}
   
-  PageEntry(int valueP, bool validP, int lastP) 
+  PageEntry(int valueP, bool validP, bool dirtyP, int lastP) 
   {
 		value = valueP;
 		valid = validP;
+    dirty = dirtyP;
 		last = lastP;
 	}
 };
@@ -58,6 +59,22 @@ class PageTable
 	int totalReplacements;
   	int pageSize;
   	int memSize;
+	
+	int totalReplacements;
+	int pageNumber;
+	int frameNumber; 
+  
+  int lineCount;
+  
+
+  public: 
+  vector<PageEntry> page_table; 
+  int lineNum;
+  int totalPageFaults;
+  int pageSize;
+  int memSize;
+  double timeElapsed;
+  int totalReferences;
 
   
 	PageTable();

@@ -42,6 +42,11 @@ void PageTable::random(PageEntry &page)
 	int entry = randNum;
   
 	page_table[entry] = page;  
+
+  if (page_table[entry].dirty == true)
+  {
+		totalReplacements++;
+  }
 }
 
 void PageTable::FIFO(PageEntry &page)
@@ -50,6 +55,11 @@ void PageTable::FIFO(PageEntry &page)
 	lineCount++;
 
 	page_table[replace] = page; 
+
+  if (page_table[replace].dirty == true)
+  {
+		totalReplacements++;
+  }
 
 }
 
