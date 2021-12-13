@@ -40,6 +40,11 @@ void PageTable::random(PageEntry &page)
 	int entry = randNum;
   
 	page_table[entry] = page;  
+
+  if (page_table[entry].dirty == true)
+  {
+		totalReplacements++;
+  }
 }
 
 void PageTable::FIFO(PageEntry &page)
@@ -48,6 +53,11 @@ void PageTable::FIFO(PageEntry &page)
 	lineCount++;
 
 	page_table[replace] = page; 
+
+  if (page_table[replace].dirty == true)
+  {
+		totalReplacements++;
+  }
 
 }
 
@@ -75,7 +85,7 @@ void PageTable::LRU(PageEntry &page){
 
 int PageTable::find(int lookFor)
 {
-  for(unsigned int i = 0; i < page_table.size(); i++)
+  for(int i = 0; i < page_table.size(); i++)
   {
     if(page_table[i].value == lookFor)
     {
