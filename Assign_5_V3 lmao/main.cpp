@@ -10,8 +10,158 @@
 #include <sys/time.h>
 
 using namespace std;
-
 #define Size 100
+
+void runFIFO(int ps, int ms)
+{
+  cout << "****************Simulate FIFO replacement****************************" << endl;
+  PageTable tableFIFO;
+  fstream fin2("large_refs.txt");
+  string line2;
+
+  tableFIFO.pageSize = ps; 
+  tableFIFO.memSize = ms;
+
+  // make page table;
+  int tableSizeF = tableFIFO.memSize / tableFIFO.pageSize;
+
+  tableFIFO.insert(tableSizeF);
+
+  struct timeval tim; 
+  gettimeofday(&tim, NULL);  
+  double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
+
+  //initialize random seed
+  srand(time(NULL));
+
+  while(fin2 >> line2)
+  {
+    int value = stoi(line2);
+
+    tableFIFO.totalReferences++;
+
+    // find value in page_table
+    int indexF = tableFIFO.find(value); 
+
+    if (indexF >= 0)
+    {
+      tableFIFO.page_table[indexF].last = tableFIFO.lineNum;
+      tableFIFO.page_table[indexF].dirty = false;
+    }
+
+    else //needs new table entry
+    {
+      PageEntry tempF(value, true, true, tableFIFO.lineNum);
+      tableFIFO.totalPageFaults++;
+    }
+  }
+    gettimeofday(&tim, NULL);  
+    double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+    tableFIFO.timeElapsed = endTime-startTime; 
+
+    tableFIFO.display();
+}
+
+void runRandom(int ps, int ms)
+{
+  cout << "****************Simulate Random replacement****************************" << endl;
+  PageTable tableRandom;
+  fstream fin2("large_refs.txt");
+  string line2;
+
+  tableRandom.pageSize = ps; 
+  tableRandom.memSize = ms;
+
+  // make page table;
+  int tableSizeR = tableRandom.memSize / tableRandom.pageSize;
+
+  tableRandom.insert(tableSizeR);
+
+  struct timeval tim; 
+  gettimeofday(&tim, NULL);  
+  double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
+
+  //initialize random seed
+  srand(time(NULL));
+
+  while(fin2 >> line2)
+  {
+    int value = stoi(line2);
+
+    tableRandom.totalReferences++;
+
+    // find value in page_table
+    int indexR = tableRandom.find(value); 
+
+    if (indexR >= 0)
+    {
+      tableRandom.page_table[indexR].last = tableRandom.lineNum;
+      tableRandom.page_table[indexR].dirty = false;
+    }
+
+    else //needs new table entry
+    {
+      PageEntry tempF(value, true, true, tableRandom.lineNum);
+      tableRandom.totalPageFaults++;
+    }
+  }
+    gettimeofday(&tim, NULL);  
+    double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+    tableRandom.timeElapsed = endTime-startTime; 
+
+    tableRandom.display();
+}
+
+void runLRU(int ps, int ms)
+{
+  cout << "****************Simulate LRU replacement****************************" << endl;
+  PageTable tableLRU;
+  fstream fin2("large_refs.txt");
+  string line2;
+
+  tableLRU.pageSize = ps; 
+  tableLRU.memSize = ms;
+
+  // make page table;
+  int tableSizeF = tableLRU.memSize / tableLRU.pageSize;
+
+  tableLRU.insert(tableSizeF);
+
+  struct timeval tim; 
+  gettimeofday(&tim, NULL);  
+  double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
+
+  //initialize random seed
+  srand(time(NULL));
+
+  while(fin2 >> line2)
+  {
+    int value = stoi(line2);
+
+    tableLRU.totalReferences++;
+
+    // find value in page_table
+    int indexL = tableLRU.find(value); 
+
+    if (indexL >= 0)
+    {
+      tableLRU.page_table[indexL].last = tableLRU.lineNum;
+      tableLRU.page_table[indexL].dirty = false;
+    }
+
+    else //needs new table entry
+    {
+      PageEntry tempF(value, true, true, tableLRU.lineNum);
+      tableLRU.totalPageFaults++;
+    }
+  }
+    gettimeofday(&tim, NULL);  
+    double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
+    tableLRU.timeElapsed = endTime-startTime; 
+
+    tableLRU.display();
+}
+
 // Check if an integer is power of 2
 bool isPowerOfTwo(unsigned int x)
 {
@@ -104,83 +254,12 @@ int main(int argc, char* argv[]) {
 	}
 	cout << "Total Page Fault: " << part1.totalPageFaults << endl;
 	cout << "Total Replacements: " << part1.totalReplacements << endl;
-	
-
-
 
 	// Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
 	cout <<"\n================================Test 2==================================================\n";
+  runFIFO(page_size,phys_mem_size);
 
-PageTable table;
-fstream fin2("large_refs.txt");
-string line2;
-//int random;
+  runRandom(page_size,phys_mem_size);
 
-table.pageSize = atoi(argv[1]); 
-table.memSize = atoi(argv[2]); 
-
-  // make page table;
-int tableSize = table.memSize / table.pageSize;
-table.insert(tableSize);
-
-  struct timeval tim; 
-  gettimeofday(&tim, NULL);  
-  double startTime =tim.tv_sec+(tim.tv_usec/1000000.0);
-
-  //initialize random seed
-  srand(time(NULL));
-
-
-	while(fin2 >> line2)
-  {
-		int value = stoi(line2);
-
-    table.totalReferences++;
-
-		// find value in page_table
-		int index = table.find(value); 
-
-		// exists in the page_table
-		if (index >= 0) 
-    {
-      table.page_table[index].last = table.lineNum;
-			table.page_table[index].dirty = false;
-		}
-    else //needs new table entry
-    {
-      PageEntry temp(value, true, true, table.lineNum);
-			table.totalPageFaults++;
-
-      cout << "****************Simulate FIFO replacement****************************" << endl;
-	    // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm	
-	    // TODO: print the statistics and run-time
-      table.FIFO(temp);
-      gettimeofday(&tim, NULL);  
-      double endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
-      table.timeElapsed = endTime-startTime; 
-      table.display();
-
-	    cout << "****************Simulate Random replacement****************************" << endl;
-	    // TODO: Add your code to calculate number of page faults using Random replacement algorithm
-	    // TODO: print the statistics and run-time
-      table.random(temp);
-      gettimeofday(&tim, NULL);  
-      endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
-      table.timeElapsed = endTime-startTime; 
-      table.display();
-
-	    cout << "****************Simulate LRU replacement****************************" << endl;
-	    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
-	    // TODO: print the statistics and run-time
-      table.LRU(temp);
-      table.display();
-      gettimeofday(&tim, NULL);  
-      endTime=tim.tv_sec+(tim.tv_usec/1000000.0);  
-      table.timeElapsed = endTime-startTime; 
-      table.display();
-      
-    }
-    
+  runLRU(page_size,phys_mem_size);
 	}
-}
-
